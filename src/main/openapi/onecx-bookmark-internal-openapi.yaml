@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: onecx-product-store-svc
+  title: onecx-bookmark-svc
   description: Backend service for bookmarks. You can manage bookmarks for your workspaces here
   version: 1.0.0
   contact:
