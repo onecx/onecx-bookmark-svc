@@ -1,5 +1,7 @@
 package org.tkit.onecx.bookmark.rs.internal.controllers;
 
-public class BookmarkRestControllerIT extends BookmarkRestControllerTest {
+import io.quarkus.test.junit.QuarkusIntegrationTest;
 
+@QuarkusIntegrationTest
+public class BookmarkRestControllerIT extends BookmarkRestControllerTest {
 }
