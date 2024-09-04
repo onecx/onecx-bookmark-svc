@@ -1,0 +1,13 @@
+app:
+  name: svc
+  image:
+    repository: "onecx/onecx-bookmark-svc"
+  db:
+    enabled: true
+  operator:
+    keycloak:
+      client:
+        enabled: true
+        spec:
+          kcConfig:
+            defaultClientScopes: [ ocx-tn:read ]
