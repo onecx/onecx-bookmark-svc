@@ -13,4 +13,4 @@ jobs:
     secrets: inherit
     with:
       native: true
-      helmEventTargetRepository: onecx/onecx-help
+      helmEventTargetRepository: onecx/onecx-bookmark
