@@ -16,7 +16,6 @@ import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
 import org.tkit.onecx.bookmark.domain.daos.BookmarkDAO;
 import org.tkit.onecx.bookmark.rs.internal.mappers.BookmarkMapper;
 import org.tkit.onecx.bookmark.rs.internal.mappers.ExceptionMapper;
-import org.tkit.quarkus.jpa.exceptions.ConstraintException;
 import org.tkit.quarkus.log.cdi.LogService;
 
 import gen.org.tkit.onecx.bookmark.rs.internal.BookmarksInternalApi;
@@ -77,11 +76,6 @@ public class BookmarkRestController implements BookmarksInternalApi {
         var criteria = bookmarkMapper.map(bookmarkSearchCriteriaDTO);
         var bookmarks = bookmarkDAO.findBookmarksByCriteria(criteria);
         return Response.ok(bookmarkMapper.mapPage(bookmarks)).build();
-    }
-
-    @ServerExceptionMapper
-    public RestResponse<ProblemDetailResponseDTO> exception(ConstraintException ex) {
-        return exceptionMapper.exception(ex);
     }
 
     @ServerExceptionMapper
