@@ -199,7 +199,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         assertThat(output).isNotNull();
         assertThat(output.getStream()).isNotNull();
-        assertThat(output.getStream().size()).isZero();
+        assertThat(output.getStream().isEmpty());
     }
 
 }
