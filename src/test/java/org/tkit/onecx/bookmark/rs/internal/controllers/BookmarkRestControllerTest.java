@@ -25,7 +25,7 @@ import io.quarkus.test.junit.QuarkusTest;
 public class BookmarkRestControllerTest extends AbstractTest {
 
     @Test
-    public void createBookmark() {
+    void createBookmark() {
 
         CreateBookmarkDTO createBookmarkDTO = new CreateBookmarkDTO();
         createBookmarkDTO.setDisplayName("newDisplayName");
@@ -34,6 +34,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
         createBookmarkDTO.setWorkspaceName("newWorkspace");
         createBookmarkDTO.setEndpointName("newEndpoint");
         createBookmarkDTO.setScope(CreateBookmarkDTO.ScopeEnum.PUBLIC);
+        createBookmarkDTO.setPosition(1);
 
         var res = given()
                 .contentType(APPLICATION_JSON)
@@ -66,11 +67,12 @@ public class BookmarkRestControllerTest extends AbstractTest {
     }
 
     @Test
-    public void updateBookmark() {
+    void updateBookmark() {
 
         UpdateBookmarkDTO updateBookmarkDTO = new UpdateBookmarkDTO();
         updateBookmarkDTO.setDisplayName("newDisplayName");
         updateBookmarkDTO.setModificationCount(0);
+        updateBookmarkDTO.setPosition(2);
 
         given()
                 .contentType(APPLICATION_JSON)
@@ -130,11 +132,12 @@ public class BookmarkRestControllerTest extends AbstractTest {
     }
 
     @Test
-    public void updateBookmark_shouldNotFindUpdateBookmark() {
+    void updateBookmark_shouldNotFindUpdateBookmark() {
 
         UpdateBookmarkDTO updateBookmarkDTO = new UpdateBookmarkDTO();
         updateBookmarkDTO.setDisplayName("newDisplayName");
         updateBookmarkDTO.setModificationCount(1);
+        updateBookmarkDTO.setPosition(1);
 
         given()
                 .contentType(APPLICATION_JSON)
@@ -149,7 +152,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
     }
 
     @Test
-    public void searchBookmarksByCriteria() {
+    void searchBookmarksByCriteria() {
 
         BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO = new BookmarkSearchCriteriaDTO();
         bookmarkSearchCriteriaDTO.setWorkspaceName("workspaceName_notExist");
@@ -166,7 +169,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
     }
 
     @Test
-    public void deleteBookmark() {
+    void deleteBookmark() {
 
         var res = given()
                 .contentType(APPLICATION_JSON)
@@ -196,7 +199,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         assertThat(output).isNotNull();
         assertThat(output.getStream()).isNotNull();
-        assertThat(output.getStream().size()).isEqualTo(0);
+        assertThat(output.getStream().isEmpty());
     }
 
 }

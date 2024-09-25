@@ -1,21 +1,19 @@
-
 :summaryTableId: onecx-bookmark-svc
 [.configuration-legend]
 icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
 [.configuration-reference.searchable, cols="80,.^10,.^10"]
 |===
 
-h|[[onecx-bookmark-svc_configuration]]link:#onecx-bookmark-svc_configuration[Configuration property]
-
+h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a| [[onecx-bookmark-svc_onecx-bookmark-default-enabled]]`link:#onecx-bookmark-svc_onecx-bookmark-default-enabled[onecx.bookmark.default.enabled]`
-
+a| [[onecx-bookmark-svc_onecx-bookmark-default-enabled]] [.property-path]##`onecx.bookmark.default.enabled`##
 
 [.description]
 --
 Enable or disable default bookmark
+
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++ONECX_BOOKMARK_DEFAULT_ENABLED+++[]
@@ -23,16 +21,16 @@ endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++ONECX_BOOKMARK_DEFAULT_ENABLED+++`
 endif::add-copy-button-to-env-var[]
---|boolean 
+--
+|boolean
 |`false`
 
-
-a| [[onecx-bookmark-svc_onecx-bookmark-default-url]]`link:#onecx-bookmark-svc_onecx-bookmark-default-url[onecx.bookmark.default.url]`
-
+a| [[onecx-bookmark-svc_onecx-bookmark-default-url]] [.property-path]##`onecx.bookmark.default.url`##
 
 [.description]
 --
 Default bookmark URL
+
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++ONECX_BOOKMARK_DEFAULT_URL+++[]
@@ -40,16 +38,16 @@ endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++ONECX_BOOKMARK_DEFAULT_URL+++`
 endif::add-copy-button-to-env-var[]
---|string 
+--
+|string
 |`https://github.com/onecx`
 
-
-a| [[onecx-bookmark-svc_onecx-bookmark-product-item-id]]`link:#onecx-bookmark-svc_onecx-bookmark-product-item-id[onecx.bookmark.product-item-id]`
-
+a| [[onecx-bookmark-svc_onecx-bookmark-product-item-id]] [.property-path]##`onecx.bookmark.product-item-id`##
 
 [.description]
 --
 Default bookmark URL
+
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++ONECX_BOOKMARK_PRODUCT_ITEM_ID+++[]
@@ -57,7 +55,11 @@ endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++ONECX_BOOKMARK_PRODUCT_ITEM_ID+++`
 endif::add-copy-button-to-env-var[]
---|string 
+--
+|string
 |`PRODUCT_BASE_DOC_URL`
 
 |===
+
+
+:!summaryTableId:

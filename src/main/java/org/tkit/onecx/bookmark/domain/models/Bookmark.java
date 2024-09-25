@@ -56,4 +56,6 @@ public class Bookmark extends TraceableEntity {
     @Enumerated(EnumType.STRING)
     private Scope scope;
 
+    @Column(name = "POSITION", nullable = false)
+    private Integer position;
 }

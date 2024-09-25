@@ -161,6 +161,7 @@ components:
         - appId
         - scope
         - workspaceName
+        - position
       type: object
       properties:
         id:
@@ -201,6 +202,9 @@ components:
           enum:
             - PRIVATE
             - PUBLIC
+        position:
+          format: int32
+          type: integer
     BookmarkPageResult:
       type: object
       properties:
@@ -231,6 +235,7 @@ components:
         - workspaceName
         - productName
         - scope
+        - position
       type: object
       properties:
         displayName:
@@ -258,10 +263,14 @@ components:
           enum:
             - PRIVATE
             - PUBLIC
+        position:
+          format: int32
+          type: integer
     UpdateBookmark:
       required:
         - displayName
         - modificationCount
+        - position
       type: object
       properties:
         modificationCount:
@@ -269,6 +278,9 @@ components:
           type: integer
         displayName:
           type: string
+        position:
+          format: int32
+          type: integer
     ProblemDetailResponse:
       type: object
       properties:
