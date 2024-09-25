@@ -25,7 +25,7 @@ import io.quarkus.test.junit.QuarkusTest;
 public class BookmarkRestControllerTest extends AbstractTest {
 
     @Test
-    public void createBookmark() {
+    void createBookmark() {
 
         CreateBookmarkDTO createBookmarkDTO = new CreateBookmarkDTO();
         createBookmarkDTO.setDisplayName("newDisplayName");
@@ -67,7 +67,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
     }
 
     @Test
-    public void updateBookmark() {
+    void updateBookmark() {
 
         UpdateBookmarkDTO updateBookmarkDTO = new UpdateBookmarkDTO();
         updateBookmarkDTO.setDisplayName("newDisplayName");
@@ -132,7 +132,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
     }
 
     @Test
-    public void updateBookmark_shouldNotFindUpdateBookmark() {
+    void updateBookmark_shouldNotFindUpdateBookmark() {
 
         UpdateBookmarkDTO updateBookmarkDTO = new UpdateBookmarkDTO();
         updateBookmarkDTO.setDisplayName("newDisplayName");
@@ -152,7 +152,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
     }
 
     @Test
-    public void searchBookmarksByCriteria() {
+    void searchBookmarksByCriteria() {
 
         BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO = new BookmarkSearchCriteriaDTO();
         bookmarkSearchCriteriaDTO.setWorkspaceName("workspaceName_notExist");
@@ -169,7 +169,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
     }
 
     @Test
-    public void deleteBookmark() {
+    void deleteBookmark() {
 
         var res = given()
                 .contentType(APPLICATION_JSON)
@@ -199,7 +199,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         assertThat(output).isNotNull();
         assertThat(output.getStream()).isNotNull();
-        assertThat(output.getStream().size()).isEqualTo(0);
+        assertThat(output.getStream().size()).isZero();
     }
 
 }

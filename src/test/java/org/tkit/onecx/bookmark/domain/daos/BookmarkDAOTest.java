@@ -27,7 +27,7 @@ public class BookmarkDAOTest {
     }
 
     @Test
-    public void findTenantIdByOrgIdExceptionTest() {
+    void findTenantIdByOrgIdExceptionTest() {
         methodExceptionTests(() -> dao.findBookmarksByCriteria(null),
                 BookmarkDAO.ErrorKeys.ERROR_GET_BY_BOOKMARK_CRITERIA);
     }
