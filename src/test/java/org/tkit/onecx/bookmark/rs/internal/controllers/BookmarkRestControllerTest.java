@@ -103,7 +103,8 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         UpdateBookmarkDTO updateOldBookmarkDTO = new UpdateBookmarkDTO();
         updateOldBookmarkDTO.setDisplayName("shouldNotBeUpdated");
-        updateOldBookmarkDTO.setModificationCount(0);
+        updateOldBookmarkDTO.setPosition(1);
+        updateOldBookmarkDTO.setModificationCount(12);
 
         // update Slot with old modificationCount
         given()
