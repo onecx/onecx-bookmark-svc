@@ -12,9 +12,6 @@
             <column name="scope"/>
         </createIndex>
     </changeSet>
-    <changeSet author="dev (generated)" id="1727422379179-2">
-        <dropTable tableName="dataimportlog"/>
-    </changeSet>
     <changeSet author="dev (generated)" id="1727422379179-3">
         <dropIndex indexName="idx_user_workspace_product_app" tableName="bookmark"/>
     </changeSet>
