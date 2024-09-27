@@ -16,7 +16,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "BOOKMARK")
+@Table(name = "BOOKMARK", indexes = {
+        @Index(name = "IDX_USER_WORKSPACE_PRODUCT_APP", columnList = "USER_ID, WORKSPACE_NAME, PRODUCT_NAME, APP_ID") })
 @SuppressWarnings("java:S2160")
 public class Bookmark extends TraceableEntity {
 
