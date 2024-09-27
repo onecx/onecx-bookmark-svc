@@ -148,23 +148,37 @@ public class BookmarkRestControllerTest extends AbstractTest {
                 .put("{id}")
                 .then()
                 .statusCode(NOT_FOUND.getStatusCode());
-
     }
 
     @Test
     void searchBookmarksByCriteria() {
 
         BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO = new BookmarkSearchCriteriaDTO();
-        bookmarkSearchCriteriaDTO.setWorkspaceName("workspaceName_notExist");
+        bookmarkSearchCriteriaDTO.setWorkspaceName("workspaceName1");
+        bookmarkSearchCriteriaDTO.setScope("PUBLIC");
 
-        given()
+        var data = given()
                 .contentType(APPLICATION_JSON)
                 .auth().oauth2(getKeycloakClientToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO)
                 .post("/search")
                 .then()
-                .statusCode(OK.getStatusCode());
+                .statusCode(OK.getStatusCode())
+                .extract().as(BookmarkPageResultDTO.class);
+        assertThat(data.getStream().size()).isZero();
+        bookmarkSearchCriteriaDTO.setScope("PRIVATE");
+
+        data = given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .body(bookmarkSearchCriteriaDTO)
+                .post("/search")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .extract().as(BookmarkPageResultDTO.class);
+        assertThat(1).isEqualTo(data.getStream().size());
 
     }
 

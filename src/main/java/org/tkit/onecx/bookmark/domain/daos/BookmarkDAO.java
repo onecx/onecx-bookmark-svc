@@ -34,8 +34,10 @@ public class BookmarkDAO extends AbstractDAO<Bookmark> {
             addSearchStringPredicate(predicates, cb, root.get(Bookmark_.productName), criteria.getProductName());
             addSearchStringPredicate(predicates, cb, root.get(Bookmark_.appId), criteria.getAppId());
             addSearchStringPredicate(predicates, cb, root.get(Bookmark_.userId), ApplicationContext.get().getPrincipal());
-
-            cq.where(predicates.toArray(new Predicate[] {}));
+            if (criteria.getScope() != null) {
+                predicates.add(root.get(Bookmark_.SCOPE).in(criteria.getScope()));
+            }
+            cq.where(cb.and(predicates.toArray(new Predicate[0])));
             cq.orderBy(cb.desc(root.get(AbstractTraceableEntity_.CREATION_DATE)));
             return createPageQuery(cq, Page.of(criteria.getPageNumber(), criteria.getPageSize())).getPageResult();
         } catch (Exception ex) {
