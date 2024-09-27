@@ -167,7 +167,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
                 .then()
                 .statusCode(OK.getStatusCode())
                 .extract().as(BookmarkPageResultDTO.class);
-        assertThat(data.getStream().isEmpty()).isTrue();
+        assertThat(data.getStream().toArray()).isEmpty();
         bookmarkSearchCriteriaDTO.setScope("PRIVATE");
 
         data = given()
