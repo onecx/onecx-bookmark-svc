@@ -70,7 +70,6 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         UpdateBookmarkDTO updateBookmarkDTO = new UpdateBookmarkDTO();
         updateBookmarkDTO.setDisplayName("newDisplayName");
-        updateBookmarkDTO.setUserId("test-user");
         updateBookmarkDTO.setModificationCount(0);
         updateBookmarkDTO.setPosition(2);
 
@@ -130,6 +129,38 @@ public class BookmarkRestControllerTest extends AbstractTest {
                 .as(BookmarkPageResultDTO.class);
 
         Assertions.assertEquals("newDisplayName", res2.getStream().get(0).getDisplayName());
+
+        //update to public
+        UpdateBookmarkDTO updateToPublic = new UpdateBookmarkDTO();
+        updateToPublic.setDisplayName("madePublic");
+        updateToPublic.setPosition(1);
+        updateToPublic.setModificationCount(res2.getStream().get(0).getModificationCount());
+        updateToPublic.setScope(UpdateBookmarkDTO.ScopeEnum.PUBLIC);
+
+        given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .body(updateToPublic)
+                .pathParam("id", "11-111")
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .put("{id}")
+                .then()
+                .statusCode(NO_CONTENT.getStatusCode());
+
+        var afterPublicUpdate = given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .body(bookmarkSearchCriteriaDTO)
+                .post("/search")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .contentType(APPLICATION_JSON)
+                .extract()
+                .as(BookmarkPageResultDTO.class);
+
+        Assertions.assertEquals(2, afterPublicUpdate.getStream().size());
+
     }
 
     @Test

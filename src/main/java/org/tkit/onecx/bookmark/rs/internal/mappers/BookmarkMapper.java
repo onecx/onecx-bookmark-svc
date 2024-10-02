@@ -28,6 +28,7 @@ public interface BookmarkMapper {
     @Mapping(target = "removeEndpointParametersItem", ignore = true)
     BookmarkDTO map(Bookmark object);
 
+    @Mapping(target = "userId", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "endpointName", ignore = true)
     @Mapping(target = "persisted", ignore = true)
@@ -45,6 +46,24 @@ public interface BookmarkMapper {
     @Mapping(target = "modificationUser", ignore = true)
     @Mapping(target = "controlTraceabilityManual", ignore = true)
     void update(UpdateBookmarkDTO bookmarkDTO, @MappingTarget Bookmark bookmark);
+
+    @Mapping(target = "userId", constant = "")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "endpointName", ignore = true)
+    @Mapping(target = "persisted", ignore = true)
+    @Mapping(target = "query", ignore = true)
+    @Mapping(target = "hash", ignore = true)
+    @Mapping(target = "tenantId", ignore = true)
+    @Mapping(target = "workspaceName", ignore = true)
+    @Mapping(target = "productName", ignore = true)
+    @Mapping(target = "appId", ignore = true)
+    @Mapping(target = "endpointParameters", ignore = true)
+    @Mapping(target = "creationDate", ignore = true)
+    @Mapping(target = "creationUser", ignore = true)
+    @Mapping(target = "modificationDate", ignore = true)
+    @Mapping(target = "modificationUser", ignore = true)
+    @Mapping(target = "controlTraceabilityManual", ignore = true)
+    void updateToPublic(UpdateBookmarkDTO bookmarkDTO, @MappingTarget Bookmark bookmark);
 
     @Mapping(target = "scope", ignore = true)
     BookmarkSearchCriteria map(BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO);

@@ -301,8 +301,11 @@ components:
         modificationCount:
           format: int32
           type: integer
-        userId:
+        scope:
           type: string
+          enum:
+            - PRIVATE
+            - PUBLIC
         displayName:
           type: string
         position:
