@@ -48,7 +48,6 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO = new BookmarkSearchCriteriaDTO();
         bookmarkSearchCriteriaDTO.setWorkspaceName("newWorkspace");
-        bookmarkSearchCriteriaDTO.setScope("PUBLIC");
 
         var dto = given()
                 .contentType(APPLICATION_JSON)
@@ -71,6 +70,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         UpdateBookmarkDTO updateBookmarkDTO = new UpdateBookmarkDTO();
         updateBookmarkDTO.setDisplayName("newDisplayName");
+        updateBookmarkDTO.setUserId("test-user");
         updateBookmarkDTO.setModificationCount(0);
         updateBookmarkDTO.setPosition(2);
 
@@ -92,7 +92,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
                 .auth().oauth2(getKeycloakClientToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO)
-                .post("/search")
+                .post("/user")
                 .then()
                 .statusCode(OK.getStatusCode())
                 .contentType(APPLICATION_JSON)
@@ -103,7 +103,8 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         UpdateBookmarkDTO updateOldBookmarkDTO = new UpdateBookmarkDTO();
         updateOldBookmarkDTO.setDisplayName("shouldNotBeUpdated");
-        updateOldBookmarkDTO.setModificationCount(0);
+        updateOldBookmarkDTO.setPosition(1);
+        updateOldBookmarkDTO.setModificationCount(12);
 
         // update Slot with old modificationCount
         given()
@@ -121,7 +122,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
                 .auth().oauth2(getKeycloakClientToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO)
-                .post("/search")
+                .post("/user")
                 .then()
                 .statusCode(OK.getStatusCode())
                 .contentType(APPLICATION_JSON)
@@ -152,20 +153,71 @@ public class BookmarkRestControllerTest extends AbstractTest {
     }
 
     @Test
-    void searchBookmarksByCriteria() {
+    void searchPublicBookmarksByCriteria() {
 
         BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO = new BookmarkSearchCriteriaDTO();
-        bookmarkSearchCriteriaDTO.setWorkspaceName("workspaceName_notExist");
+        bookmarkSearchCriteriaDTO.setWorkspaceName("workspaceName1");
+        bookmarkSearchCriteriaDTO.setProductName("someProductName");
 
-        given()
+        var data = given()
                 .contentType(APPLICATION_JSON)
                 .auth().oauth2(getKeycloakClientToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO)
                 .post("/search")
                 .then()
-                .statusCode(OK.getStatusCode());
+                .statusCode(OK.getStatusCode()).extract().as(BookmarkPageResultDTO.class);
 
+        assertThat(data.getStream().toArray()).isEmpty();
+
+        BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO2 = new BookmarkSearchCriteriaDTO();
+
+        bookmarkSearchCriteriaDTO2.setWorkspaceName("workspaceName1");
+        data = given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .body(bookmarkSearchCriteriaDTO2)
+                .post("/search")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .extract().as(BookmarkPageResultDTO.class);
+
+        assertThat(1).isEqualTo(data.getStream().size());
+    }
+
+    @Test
+    void searchUserBookmarksByCriteria() {
+
+        BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO = new BookmarkSearchCriteriaDTO();
+        bookmarkSearchCriteriaDTO.setWorkspaceName("workspaceName1");
+        bookmarkSearchCriteriaDTO.setProductName("someProductName");
+
+        var data = given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .body(bookmarkSearchCriteriaDTO)
+                .post("/user")
+                .then()
+                .statusCode(OK.getStatusCode()).extract().as(BookmarkPageResultDTO.class);
+
+        assertThat(data.getStream().toArray()).isEmpty();
+
+        BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO2 = new BookmarkSearchCriteriaDTO();
+
+        bookmarkSearchCriteriaDTO2.setWorkspaceName("workspaceName1");
+        data = given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .body(bookmarkSearchCriteriaDTO2)
+                .post("/user")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .extract().as(BookmarkPageResultDTO.class);
+
+        assertThat(1).isEqualTo(data.getStream().size());
     }
 
     @Test

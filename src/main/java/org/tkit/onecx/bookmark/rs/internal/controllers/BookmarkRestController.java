@@ -16,13 +16,11 @@ import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
 import org.tkit.onecx.bookmark.domain.daos.BookmarkDAO;
 import org.tkit.onecx.bookmark.rs.internal.mappers.BookmarkMapper;
 import org.tkit.onecx.bookmark.rs.internal.mappers.ExceptionMapper;
+import org.tkit.quarkus.context.ApplicationContext;
 import org.tkit.quarkus.log.cdi.LogService;
 
 import gen.org.tkit.onecx.bookmark.rs.internal.BookmarksInternalApi;
-import gen.org.tkit.onecx.bookmark.rs.internal.model.BookmarkSearchCriteriaDTO;
-import gen.org.tkit.onecx.bookmark.rs.internal.model.CreateBookmarkDTO;
-import gen.org.tkit.onecx.bookmark.rs.internal.model.ProblemDetailResponseDTO;
-import gen.org.tkit.onecx.bookmark.rs.internal.model.UpdateBookmarkDTO;
+import gen.org.tkit.onecx.bookmark.rs.internal.model.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -45,7 +43,8 @@ public class BookmarkRestController implements BookmarksInternalApi {
 
     @Override
     public Response createNewBookmark(CreateBookmarkDTO createBookmarkDTO) {
-        var bookmark = bookmarkMapper.create(createBookmarkDTO);
+        var userId = ApplicationContext.get().getPrincipal();
+        var bookmark = bookmarkMapper.create(createBookmarkDTO, userId);
         bookmark = bookmarkDAO.create(bookmark);
         return Response
                 .created(uriInfo.getAbsolutePathBuilder().path(bookmark.getId()).build())
@@ -75,6 +74,13 @@ public class BookmarkRestController implements BookmarksInternalApi {
     public Response searchBookmarksByCriteria(BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO) {
         var criteria = bookmarkMapper.map(bookmarkSearchCriteriaDTO);
         var bookmarks = bookmarkDAO.findBookmarksByCriteria(criteria);
+        return Response.ok(bookmarkMapper.mapPage(bookmarks)).build();
+    }
+
+    @Override
+    public Response searchUserBookmarksByCriteria(BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO) {
+        var criteria = bookmarkMapper.map(bookmarkSearchCriteriaDTO);
+        var bookmarks = bookmarkDAO.findUserBookmarksByCriteria(criteria);
         return Response.ok(bookmarkMapper.mapPage(bookmarks)).build();
     }
 

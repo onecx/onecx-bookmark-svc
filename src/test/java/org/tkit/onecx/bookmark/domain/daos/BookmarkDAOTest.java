@@ -30,6 +30,8 @@ public class BookmarkDAOTest {
     void findTenantIdByOrgIdExceptionTest() {
         methodExceptionTests(() -> dao.findBookmarksByCriteria(null),
                 BookmarkDAO.ErrorKeys.ERROR_GET_BY_BOOKMARK_CRITERIA);
+        methodExceptionTests(() -> dao.findUserBookmarksByCriteria(null),
+                BookmarkDAO.ErrorKeys.ERROR_GET_BY_BOOKMARK_CRITERIA);
     }
 
     void methodExceptionTests(Executable fn, Enum<?> key) {

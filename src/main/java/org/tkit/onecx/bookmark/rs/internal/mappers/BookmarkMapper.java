@@ -14,9 +14,6 @@ import gen.org.tkit.onecx.bookmark.rs.internal.model.*;
 public interface BookmarkMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "displayName", source = "displayName")
-    @Mapping(target = "endpointName", source = "endpointName")
-    @Mapping(target = "endpointParameters", source = "endpointParameters")
     @Mapping(target = "controlTraceabilityManual", ignore = true)
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "creationUser", ignore = true)
@@ -25,7 +22,8 @@ public interface BookmarkMapper {
     @Mapping(target = "modificationCount", ignore = true)
     @Mapping(target = "persisted", ignore = true)
     @Mapping(target = "tenantId", ignore = true)
-    Bookmark create(CreateBookmarkDTO object);
+    @Mapping(target = "userId", source = "userId")
+    Bookmark create(CreateBookmarkDTO object, String userId);
 
     @Mapping(target = "removeEndpointParametersItem", ignore = true)
     BookmarkDTO map(Bookmark object);
@@ -35,7 +33,6 @@ public interface BookmarkMapper {
     @Mapping(target = "persisted", ignore = true)
     @Mapping(target = "query", ignore = true)
     @Mapping(target = "hash", ignore = true)
-    @Mapping(target = "userId", ignore = true)
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "workspaceName", ignore = true)
     @Mapping(target = "productName", ignore = true)
@@ -49,6 +46,7 @@ public interface BookmarkMapper {
     @Mapping(target = "controlTraceabilityManual", ignore = true)
     void update(UpdateBookmarkDTO bookmarkDTO, @MappingTarget Bookmark bookmark);
 
+    @Mapping(target = "scope", ignore = true)
     BookmarkSearchCriteria map(BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO);
 
     @Mapping(target = "removeStreamItem", ignore = true)
