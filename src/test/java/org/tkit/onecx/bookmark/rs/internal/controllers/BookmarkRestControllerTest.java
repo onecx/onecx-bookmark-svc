@@ -102,6 +102,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         UpdateBookmarkDTO updateOldBookmarkDTO = new UpdateBookmarkDTO();
         updateOldBookmarkDTO.setDisplayName("shouldNotBeUpdated");
+        updateOldBookmarkDTO.setScope(UpdateBookmarkDTO.ScopeEnum.PRIVATE);
         updateOldBookmarkDTO.setPosition(1);
         updateOldBookmarkDTO.setModificationCount(12);
 
@@ -152,14 +153,14 @@ public class BookmarkRestControllerTest extends AbstractTest {
                 .auth().oauth2(getKeycloakClientToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO)
-                .post("/search")
+                .post("/user")
                 .then()
                 .statusCode(OK.getStatusCode())
                 .contentType(APPLICATION_JSON)
                 .extract()
                 .as(BookmarkPageResultDTO.class);
 
-        Assertions.assertEquals(2, afterPublicUpdate.getStream().size());
+        Assertions.assertTrue(afterPublicUpdate.getStream().isEmpty());
 
     }
 
@@ -214,7 +215,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
                 .statusCode(OK.getStatusCode())
                 .extract().as(BookmarkPageResultDTO.class);
 
-        assertThat(1).isEqualTo(data.getStream().size());
+        assertThat(2).isEqualTo(data.getStream().size());
     }
 
     @Test
