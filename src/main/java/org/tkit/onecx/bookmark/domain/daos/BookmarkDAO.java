@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.tkit.onecx.bookmark.domain.criteria.BookmarkSearchCriteria;
 import org.tkit.onecx.bookmark.domain.models.Bookmark;
 import org.tkit.onecx.bookmark.domain.models.Bookmark_;
+import org.tkit.onecx.bookmark.domain.models.enums.Scope;
 import org.tkit.quarkus.context.ApplicationContext;
 import org.tkit.quarkus.jpa.daos.AbstractDAO;
 import org.tkit.quarkus.jpa.daos.Page;
@@ -33,9 +34,32 @@ public class BookmarkDAO extends AbstractDAO<Bookmark> {
             addSearchStringPredicate(predicates, cb, root.get(Bookmark_.workspaceName), criteria.getWorkspaceName());
             addSearchStringPredicate(predicates, cb, root.get(Bookmark_.productName), criteria.getProductName());
             addSearchStringPredicate(predicates, cb, root.get(Bookmark_.appId), criteria.getAppId());
-            addSearchStringPredicate(predicates, cb, root.get(Bookmark_.userId), ApplicationContext.get().getPrincipal());
 
-            cq.where(predicates.toArray(new Predicate[] {}));
+            predicates.add(cb.or(cb.equal(root.get(Bookmark_.SCOPE), Scope.PUBLIC.name()),
+
+                    cb.equal(root.get(Bookmark_.userId), ApplicationContext.get().getPrincipal())));
+            cq.where(cb.or(cb.and(predicates.toArray(new Predicate[0]))));
+            cq.orderBy(cb.desc(root.get(AbstractTraceableEntity_.CREATION_DATE)));
+            return createPageQuery(cq, Page.of(criteria.getPageNumber(), criteria.getPageSize())).getPageResult();
+        } catch (Exception ex) {
+            throw new DAOException(ErrorKeys.ERROR_GET_BY_BOOKMARK_CRITERIA, ex);
+        }
+    }
+
+    public PageResult<Bookmark> findUserBookmarksByCriteria(BookmarkSearchCriteria criteria) {
+        try {
+            var cb = this.getEntityManager().getCriteriaBuilder();
+            var cq = cb.createQuery(Bookmark.class);
+            var root = cq.from(Bookmark.class);
+
+            List<Predicate> predicates = new ArrayList<>();
+            addSearchStringPredicate(predicates, cb, root.get(Bookmark_.workspaceName), criteria.getWorkspaceName());
+            addSearchStringPredicate(predicates, cb, root.get(Bookmark_.productName), criteria.getProductName());
+            addSearchStringPredicate(predicates, cb, root.get(Bookmark_.appId), criteria.getAppId());
+            addSearchStringPredicate(predicates, cb, root.get(Bookmark_.userId), ApplicationContext.get().getPrincipal());
+            addSearchStringPredicate(predicates, cb, root.get(Bookmark_.SCOPE), Scope.PRIVATE.name());
+
+            cq.where(cb.and(predicates.toArray(new Predicate[0])));
             cq.orderBy(cb.desc(root.get(AbstractTraceableEntity_.CREATION_DATE)));
             return createPageQuery(cq, Page.of(criteria.getPageNumber(), criteria.getPageSize())).getPageResult();
         } catch (Exception ex) {

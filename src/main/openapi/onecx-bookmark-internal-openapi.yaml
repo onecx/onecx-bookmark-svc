@@ -63,6 +63,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetailResponse'
+  /internal/bookmarks/user:
+    post:
+      security:
+        - oauth2: [ ocx-bm:all, ocx-bm:read ]
+      tags:
+        - bookmarksInternal
+      description: search user bookmarks by criteria
+      operationId: searchUserBookmarksByCriteria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookmarkSearchCriteria'
+      responses:
+        '200':
+          description: A list of bookmarks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookmarkPageResult'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetailResponse'
   /internal/bookmarks/{id}:
     put:
       security:
@@ -139,8 +166,6 @@ components:
         productName:
           type: string
         appId:
-          type: string
-        scope:
           type: string
         pageNumber:
           format: int32
@@ -276,6 +301,11 @@ components:
         modificationCount:
           format: int32
           type: integer
+        scope:
+          type: string
+          enum:
+            - PRIVATE
+            - PUBLIC
         displayName:
           type: string
         position:
