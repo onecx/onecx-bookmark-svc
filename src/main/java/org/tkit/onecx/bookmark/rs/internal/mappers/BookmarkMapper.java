@@ -1,8 +1,11 @@
 package org.tkit.onecx.bookmark.rs.internal.mappers;
 
+import java.util.Map;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import org.tkit.onecx.bookmark.domain.criteria.BookmarkSearchCriteria;
 import org.tkit.onecx.bookmark.domain.models.Bookmark;
 import org.tkit.quarkus.jpa.daos.PageResult;
@@ -23,9 +26,16 @@ public interface BookmarkMapper {
     @Mapping(target = "persisted", ignore = true)
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "userId", source = "userId")
+    @Mapping(target = "endpointParameters", qualifiedByName = "emptyToNull")
     Bookmark create(CreateBookmarkDTO object, String userId);
 
+    @Named("emptyToNull")
+    static Map<String, String> emptyToNull(Map<String, String> parameters) {
+        return (parameters == null || parameters.isEmpty()) ? null : parameters;
+    }
+
     @Mapping(target = "removeEndpointParametersItem", ignore = true)
+    @Mapping(target = "endpointParameters", qualifiedByName = "emptyToNull")
     BookmarkDTO map(Bookmark object);
 
     @Mapping(target = "userId", ignore = true)

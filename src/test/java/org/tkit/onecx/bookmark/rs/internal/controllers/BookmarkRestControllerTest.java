@@ -63,6 +63,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
         assertThat(dto).isNotNull();
         assertThat(dto.getStream()).isNotNull();
         assertThat(dto.getStream().size()).isEqualTo(1);
+        assertThat(dto.getStream().get(0).getEndpointParameters()).isEqualTo(null);
     }
 
     @Test
