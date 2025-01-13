@@ -223,10 +223,7 @@ components:
         appId:
           type: string
         scope:
-          type: string
-          enum:
-            - PRIVATE
-            - PUBLIC
+          $ref: '#/components/schemas/BookmarkScope'
         position:
           format: int32
           type: integer
