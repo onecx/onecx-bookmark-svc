@@ -2,10 +2,7 @@ package org.tkit.onecx.bookmark.rs.internal.mappers;
 
 import java.util.Map;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 import org.tkit.onecx.bookmark.domain.criteria.BookmarkSearchCriteria;
 import org.tkit.onecx.bookmark.domain.models.Bookmark;
 import org.tkit.quarkus.jpa.daos.PageResult;
@@ -40,21 +37,18 @@ public interface BookmarkMapper {
 
     @Mapping(target = "userId", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "endpointName", ignore = true)
     @Mapping(target = "persisted", ignore = true)
-    @Mapping(target = "query", ignore = true)
-    @Mapping(target = "hash", ignore = true)
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "workspaceName", ignore = true)
     @Mapping(target = "productName", ignore = true)
     @Mapping(target = "appId", ignore = true)
-    @Mapping(target = "scope", ignore = true)
-    @Mapping(target = "endpointParameters", ignore = true)
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "creationUser", ignore = true)
     @Mapping(target = "modificationDate", ignore = true)
     @Mapping(target = "modificationUser", ignore = true)
+    @Mapping(target = "endpointParameters", qualifiedByName = "emptyToNull")
     @Mapping(target = "controlTraceabilityManual", ignore = true)
+    @Mapping(target = "scope", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void update(UpdateBookmarkDTO bookmarkDTO, @MappingTarget Bookmark bookmark);
 
     @Mapping(target = "userId", constant = "")

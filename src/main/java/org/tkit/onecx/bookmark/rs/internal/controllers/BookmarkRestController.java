@@ -64,7 +64,7 @@ public class BookmarkRestController implements BookmarksInternalApi {
         if (bookmark == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        if (updateBookmarkDTO.getScope() != null && updateBookmarkDTO.getScope().equals(UpdateBookmarkDTO.ScopeEnum.PUBLIC)) {
+        if (updateBookmarkDTO.getScope() != null && updateBookmarkDTO.getScope().equals(BookmarkScopeDTO.PUBLIC)) {
             bookmarkMapper.updateToPublic(updateBookmarkDTO, bookmark);
         } else {
             bookmarkMapper.update(updateBookmarkDTO, bookmark);

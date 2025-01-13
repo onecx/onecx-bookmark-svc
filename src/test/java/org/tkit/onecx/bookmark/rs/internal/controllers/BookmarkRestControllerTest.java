@@ -33,7 +33,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
         createBookmarkDTO.setProductName("newProduct");
         createBookmarkDTO.setWorkspaceName("newWorkspace");
         createBookmarkDTO.setEndpointName("newEndpoint");
-        createBookmarkDTO.setScope(CreateBookmarkDTO.ScopeEnum.PUBLIC);
+        createBookmarkDTO.setScope(BookmarkScopeDTO.PUBLIC);
         createBookmarkDTO.setPosition(1);
 
         var res = given()
@@ -103,7 +103,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         UpdateBookmarkDTO updateOldBookmarkDTO = new UpdateBookmarkDTO();
         updateOldBookmarkDTO.setDisplayName("shouldNotBeUpdated");
-        updateOldBookmarkDTO.setScope(UpdateBookmarkDTO.ScopeEnum.PRIVATE);
+        updateOldBookmarkDTO.setScope(BookmarkScopeDTO.PRIVATE);
         updateOldBookmarkDTO.setPosition(1);
         updateOldBookmarkDTO.setModificationCount(12);
 
@@ -137,7 +137,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
         updateToPublic.setDisplayName("madePublic");
         updateToPublic.setPosition(1);
         updateToPublic.setModificationCount(res2.getStream().get(0).getModificationCount());
-        updateToPublic.setScope(UpdateBookmarkDTO.ScopeEnum.PUBLIC);
+        updateToPublic.setScope(BookmarkScopeDTO.PUBLIC);
 
         given()
                 .contentType(APPLICATION_JSON)
