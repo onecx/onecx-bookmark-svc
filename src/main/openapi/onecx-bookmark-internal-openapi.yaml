@@ -283,10 +283,7 @@ components:
         appId:
           type: string
         scope:
-          type: string
-          enum:
-            - PRIVATE
-            - PUBLIC
+          $ref: '#/components/schemas/BookmarkScope'
         position:
           format: int32
           type: integer
@@ -301,15 +298,29 @@ components:
           format: int32
           type: integer
         scope:
-          type: string
-          enum:
-            - PRIVATE
-            - PUBLIC
+          $ref: '#/components/schemas/BookmarkScope'
         displayName:
           type: string
         position:
           format: int32
           type: integer
+        endpointName:
+          type: string
+        endpointParameters:
+          type: object
+          additionalProperties:
+            type: string
+        query:
+          type: string
+        hash:
+          type: string
+        userId:
+          type: string
+    BookmarkScope:
+      type: string
+      enum:
+        - PRIVATE
+        - PUBLIC
     ProblemDetailResponse:
       type: object
       properties:
