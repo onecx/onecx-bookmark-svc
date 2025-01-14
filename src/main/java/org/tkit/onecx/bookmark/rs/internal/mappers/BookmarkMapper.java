@@ -35,7 +35,6 @@ public interface BookmarkMapper {
     @Mapping(target = "endpointParameters", qualifiedByName = "emptyToNull")
     BookmarkDTO map(Bookmark object);
 
-    @Mapping(target = "userId", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "persisted", ignore = true)
     @Mapping(target = "tenantId", ignore = true)
@@ -49,6 +48,7 @@ public interface BookmarkMapper {
     @Mapping(target = "endpointParameters", qualifiedByName = "emptyToNull")
     @Mapping(target = "controlTraceabilityManual", ignore = true)
     @Mapping(target = "scope", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "userId", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void update(UpdateBookmarkDTO bookmarkDTO, @MappingTarget Bookmark bookmark);
 
     @Mapping(target = "userId", constant = "")
