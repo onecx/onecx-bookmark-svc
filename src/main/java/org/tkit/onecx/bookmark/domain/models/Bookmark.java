@@ -31,8 +31,9 @@ public class Bookmark extends TraceableEntity {
     @Column(name = "ENDPOINT_PARAMETERS")
     private Map<String, String> endpointParameters;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "QUERY")
-    private String query;
+    private Map<String, String> query;
 
     @Column(name = "HASH")
     private String hash;

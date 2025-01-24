@@ -24,6 +24,7 @@ public interface BookmarkMapper {
     @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "userId", source = "userId")
     @Mapping(target = "endpointParameters", qualifiedByName = "emptyToNull")
+    @Mapping(target = "query", qualifiedByName = "emptyToNull")
     Bookmark create(CreateBookmarkDTO object, String userId);
 
     @Named("emptyToNull")
@@ -32,6 +33,7 @@ public interface BookmarkMapper {
     }
 
     @Mapping(target = "removeEndpointParametersItem", ignore = true)
+    @Mapping(target = "removeQueryItem", ignore = true)
     @Mapping(target = "endpointParameters", qualifiedByName = "emptyToNull")
     BookmarkDTO map(Bookmark object);
 
@@ -46,6 +48,7 @@ public interface BookmarkMapper {
     @Mapping(target = "modificationDate", ignore = true)
     @Mapping(target = "modificationUser", ignore = true)
     @Mapping(target = "endpointParameters", qualifiedByName = "emptyToNull")
+    @Mapping(target = "query", qualifiedByName = "emptyToNull")
     @Mapping(target = "controlTraceabilityManual", ignore = true)
     @Mapping(target = "scope", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "userId", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
