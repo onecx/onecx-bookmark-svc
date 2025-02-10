@@ -5,4 +5,8 @@
 	<BOOKMARK guid="11-111" optlock="0" display_name="displayName1" workspace_name="workspaceName1" app_id="appId1" user_id="test-user" product_name="productName1" tenant_id="default" position="1" scope="PRIVATE"/>
 	<BOOKMARK guid="22-222" optlock="0" display_name="displayName1" workspace_name="workspaceName1" app_id="appId1" user_id="" product_name="productName1" tenant_id="default" position="1" scope="PUBLIC"/>
 
+	<!-- STATIC BOOKMARK -->
+	<STATIC_BOOKMARK guid="11-111" optlock="0" display_name="displayName1" workspace_name="workspaceName1" tenant_id="default" position="1" url="someUrl"/>
+	<STATIC_BOOKMARK guid="22-222" optlock="0" display_name="displayName1" workspace_name="workspaceName1" tenant_id="default" position="2" url="someUrl"/>
+
 </dataset>
