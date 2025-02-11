@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import io.quarkus.test.Mock;
+import io.quarkus.test.keycloak.client.KeycloakTestClient;
 import io.restassured.config.RestAssuredConfig;
 import io.smallrye.config.SmallRyeConfig;
 import io.smallrye.jwt.build.Jwt;
@@ -29,6 +30,7 @@ import io.smallrye.jwt.util.KeyUtils;
 public class AbstractTest {
     protected static final String APM_HEADER_PARAM = "apm-principal-token";
     protected static final String CLAIMS_ORG_ID = "orgId";
+    public KeycloakTestClient keycloakTestClient = new KeycloakTestClient();
 
     static {
         config = RestAssuredConfig.config().objectMapperConfig(
