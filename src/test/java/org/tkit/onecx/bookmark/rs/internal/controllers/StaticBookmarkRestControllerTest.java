@@ -174,7 +174,6 @@ class StaticBookmarkRestControllerTest extends AbstractTest {
 
         assertThat(output).isNotNull();
         assertThat(output.getStream()).isNotNull();
-        assertThat(output.getStream().size()).isEqualTo(1);
         Assertions.assertEquals(1, output.getStream().size());
     }
 
