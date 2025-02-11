@@ -4,7 +4,6 @@ import static io.restassured.RestAssured.given;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 import static jakarta.ws.rs.core.Response.Status.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.tkit.quarkus.security.test.SecurityTestUtils.getKeycloakClientToken;
 
 import jakarta.ws.rs.core.Response;
 
@@ -38,7 +37,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         var res = given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .body(createBookmarkDTO)
                 .post()
                 .then()
@@ -51,7 +50,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         var dto = given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .body(bookmarkSearchCriteriaDTO)
                 .post("/search")
                 .then()
@@ -76,7 +75,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .body(updateBookmarkDTO)
                 .pathParam("id", "11-111")
                 .header(APM_HEADER_PARAM, createToken("org3"))
@@ -89,7 +88,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         var res = given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO)
                 .post("/user")
@@ -110,7 +109,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
         // update Slot with old modificationCount
         given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .body(updateOldBookmarkDTO)
                 .pathParam("id", "11-111")
                 .header(APM_HEADER_PARAM, createToken("org3"))
@@ -120,7 +119,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         var res2 = given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO)
                 .post("/user")
@@ -141,7 +140,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .body(updateToPublic)
                 .pathParam("id", "11-111")
                 .header(APM_HEADER_PARAM, createToken("org3"))
@@ -151,7 +150,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         var afterPublicUpdate = given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO)
                 .post("/user")
@@ -175,7 +174,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .body(updateBookmarkDTO)
                 .pathParam("id", "not_exist")
                 .header(APM_HEADER_PARAM, createToken("org3"))
@@ -194,7 +193,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         var data = given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO)
                 .post("/search")
@@ -208,7 +207,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
         bookmarkSearchCriteriaDTO2.setWorkspaceName("workspaceName1");
         data = given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO2)
                 .post("/search")
@@ -228,7 +227,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         var data = given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO)
                 .post("/user")
@@ -242,7 +241,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
         bookmarkSearchCriteriaDTO2.setWorkspaceName("workspaceName1");
         data = given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO2)
                 .post("/user")
@@ -258,7 +257,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         var res = given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .pathParam("id", "11-111")
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .delete("{id}")
@@ -272,7 +271,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         var output = given()
                 .contentType(APPLICATION_JSON)
-                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO)
                 .post("/search")
