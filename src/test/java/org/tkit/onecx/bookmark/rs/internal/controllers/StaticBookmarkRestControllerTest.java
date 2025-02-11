@@ -8,15 +8,13 @@ import static org.tkit.quarkus.security.test.SecurityTestUtils.getKeycloakClient
 
 import jakarta.ws.rs.core.Response;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.tkit.onecx.bookmark.test.AbstractTest;
 import org.tkit.quarkus.security.test.GenerateKeycloakClient;
 import org.tkit.quarkus.test.WithDBData;
 
-import gen.org.tkit.onecx.bookmark.rs.internal.model.CreateStaticBookmarkDTO;
-import gen.org.tkit.onecx.bookmark.rs.internal.model.StaticBookmarkPageResultDTO;
-import gen.org.tkit.onecx.bookmark.rs.internal.model.StaticBookmarkSearchCriteriaDTO;
-import gen.org.tkit.onecx.bookmark.rs.internal.model.UpdateStaticBookmarkDTO;
+import gen.org.tkit.onecx.bookmark.rs.internal.model.*;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 
@@ -24,7 +22,7 @@ import io.quarkus.test.junit.QuarkusTest;
 @TestHTTPEndpoint(StaticBookmarkRestController.class)
 @WithDBData(value = "data/test-internal.xml", deleteBeforeInsert = true, deleteAfterTest = true, rinseAndRepeat = true)
 @GenerateKeycloakClient(clientName = "testClient", scopes = "ocx-bm:all")
-public class StaticBookmarkRestControllerTest extends AbstractTest {
+class StaticBookmarkRestControllerTest extends AbstractTest {
 
     @Test
     void createStaticBookmark() {
@@ -60,7 +58,7 @@ public class StaticBookmarkRestControllerTest extends AbstractTest {
 
         assertThat(dto).isNotNull();
         assertThat(dto.getStream()).isNotNull();
-        assertThat(dto.getStream().size()).isEqualTo(1);
+        Assertions.assertEquals(1, dto.getStream().size());
     }
 
     @Test
@@ -122,6 +120,15 @@ public class StaticBookmarkRestControllerTest extends AbstractTest {
 
         StaticBookmarkSearchCriteriaDTO staticBookmarkSearchCriteriaDTO = new StaticBookmarkSearchCriteriaDTO();
 
+        given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(getKeycloakClientToken("testClient"))
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .body(staticBookmarkSearchCriteriaDTO)
+                .post("/search")
+                .then()
+                .statusCode(BAD_REQUEST.getStatusCode());
+
         staticBookmarkSearchCriteriaDTO.setWorkspaceName("workspaceName1");
         var data = given()
                 .contentType(APPLICATION_JSON)
@@ -168,6 +175,7 @@ public class StaticBookmarkRestControllerTest extends AbstractTest {
         assertThat(output).isNotNull();
         assertThat(output.getStream()).isNotNull();
         assertThat(output.getStream().size()).isEqualTo(1);
+        Assertions.assertEquals(1, output.getStream().size());
     }
 
 }
