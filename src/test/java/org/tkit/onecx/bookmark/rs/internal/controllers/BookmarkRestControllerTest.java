@@ -215,7 +215,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
                 .statusCode(OK.getStatusCode())
                 .extract().as(BookmarkPageResultDTO.class);
 
-        assertThat(2).isEqualTo(data.getStream().size());
+        assertThat(3).isEqualTo(data.getStream().size());
     }
 
     @Test
