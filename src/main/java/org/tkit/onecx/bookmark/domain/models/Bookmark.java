@@ -35,8 +35,11 @@ public class Bookmark extends TraceableEntity {
     @Column(name = "QUERY")
     private Map<String, String> query;
 
-    @Column(name = "HASH")
-    private String hash;
+    @Column(name = "FRAGMENT")
+    private String fragment;
+
+    @Column(name = "URL", columnDefinition = "VARCHAR(1000)")
+    private String url;
 
     @Column(name = "USER_ID")
     private String userId;

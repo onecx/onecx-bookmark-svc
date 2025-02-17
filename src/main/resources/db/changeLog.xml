@@ -3,9 +3,5 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include relativeToChangelogFile="true" file="v1/2024-08-13-create-tables.xml"/>
-    <include relativeToChangelogFile="true" file="v1/2024-09-25-position-field.xml"/>
-    <include relativeToChangelogFile="true" file="v1/2024-09-27-add-index.xml"/>
-    <include relativeToChangelogFile="true" file="v1/2025-01-24-query-jsonb.xml"/>
-    <include relativeToChangelogFile="true" file="v1/2025-02-10-static-bookmarks.xml"/>
+    <include relativeToChangelogFile="true" file="v1/2025-02-17-create-tables.xml"/>
 </databaseChangeLog>
