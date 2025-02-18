@@ -204,6 +204,15 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO2 = new BookmarkSearchCriteriaDTO();
 
+        given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .body(bookmarkSearchCriteriaDTO2)
+                .post("/search")
+                .then()
+                .statusCode(BAD_REQUEST.getStatusCode());
+
         bookmarkSearchCriteriaDTO2.setWorkspaceName("workspaceName1");
         data = given()
                 .contentType(APPLICATION_JSON)

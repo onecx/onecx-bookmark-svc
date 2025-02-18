@@ -4,6 +4,7 @@ import static org.tkit.quarkus.jpa.utils.QueryCriteriaUtil.addSearchStringPredic
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.criteria.Predicate;
@@ -46,6 +47,37 @@ public class BookmarkDAO extends AbstractDAO<Bookmark> {
         }
     }
 
+    public Stream<Bookmark> findAllBookmarksByWorkspaceAndScope(String workspaceName, List<Scope> scopes) {
+        try {
+            var cb = this.getEntityManager().getCriteriaBuilder();
+            var cq = cb.createQuery(Bookmark.class);
+            var root = cq.from(Bookmark.class);
+
+            List<Predicate> predicates = new ArrayList<>();
+            addSearchStringPredicate(predicates, cb, root.get(Bookmark_.workspaceName), workspaceName);
+
+            if (scopes.contains(Scope.PUBLIC) && scopes.contains(Scope.PRIVATE)) {
+                predicates.add(cb.or(
+                        cb.equal(root.get(Bookmark_.SCOPE), Scope.PUBLIC.name()),
+                        cb.and(
+                                cb.equal(root.get(Bookmark_.SCOPE), Scope.PRIVATE.name()),
+                                cb.equal(root.get(Bookmark_.userId), ApplicationContext.get().getPrincipal()))));
+            } else if (scopes.contains(Scope.PUBLIC)) {
+                predicates.add(cb.equal(root.get(Bookmark_.SCOPE), Scope.PUBLIC.name()));
+            } else {
+                predicates.add(cb.and(
+                        cb.equal(root.get(Bookmark_.SCOPE), Scope.PRIVATE.name()),
+                        cb.equal(root.get(Bookmark_.userId), ApplicationContext.get().getPrincipal())));
+            }
+
+            cq.where(cb.and(predicates.toArray(new Predicate[0])));
+            cq.orderBy(cb.desc(root.get(AbstractTraceableEntity_.CREATION_DATE)));
+            return this.getEntityManager().createQuery(cq).getResultStream();
+        } catch (Exception ex) {
+            throw new DAOException(ErrorKeys.ERROR_GET_ALL_BY_WORKSPACE_SCOPE, ex);
+        }
+    }
+
     public PageResult<Bookmark> findUserBookmarksByCriteria(BookmarkSearchCriteria criteria) {
         try {
             var cb = this.getEntityManager().getCriteriaBuilder();
@@ -67,9 +99,29 @@ public class BookmarkDAO extends AbstractDAO<Bookmark> {
         }
     }
 
+    @Transactional
+    public void deleteAllByWorkspaceName(String workspace) {
+        try {
+            var cb = this.getEntityManager().getCriteriaBuilder();
+            var cq = this.deleteQuery();
+            var root = cq.from(Bookmark.class);
+            List<Predicate> predicates = new ArrayList<>();
+
+            predicates.add(cb.equal(root.get(Bookmark_.workspaceName), workspace));
+            predicates.add(cb.and(
+                    cb.equal(root.get(Bookmark_.SCOPE), Scope.PRIVATE.name()),
+                    cb.equal(root.get(Bookmark_.userId), ApplicationContext.get().getPrincipal())));
+            cq.where(cb.or(cb.and(predicates.toArray(new Predicate[0]))));
+            getEntityManager().createQuery(cq).executeUpdate();
+        } catch (Exception ex) {
+            throw new DAOException(ErrorKeys.ERROR_DELETE_ALL_BY_WORKSPACE, ex);
+        }
+    }
+
     public enum ErrorKeys {
 
         ERROR_GET_BY_BOOKMARK_CRITERIA,
-
+        ERROR_GET_ALL_BY_WORKSPACE_SCOPE,
+        ERROR_DELETE_ALL_BY_WORKSPACE
     }
 }
