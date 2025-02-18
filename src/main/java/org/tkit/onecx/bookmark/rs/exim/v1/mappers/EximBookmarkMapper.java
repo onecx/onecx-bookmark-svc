@@ -43,9 +43,9 @@ public interface EximBookmarkMapper {
 
     default List<Bookmark> mapEximList(List<EximBookmarkDTOV1> bookmarkList, String userId, String workspaceName) {
         List<Bookmark> bookmarks = new ArrayList<>();
-        bookmarkList.forEach(eximBookmarkDTOV1 -> {
-            bookmarks.add(map(eximBookmarkDTOV1, userId, workspaceName));
-        });
+        bookmarkList.forEach(eximBookmarkDTOV1 ->
+            bookmarks.add(map(eximBookmarkDTOV1, userId, workspaceName))
+        );
         return bookmarks;
     }
 
