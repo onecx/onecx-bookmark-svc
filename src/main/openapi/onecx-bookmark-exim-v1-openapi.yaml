@@ -1,0 +1,185 @@
+---
+openapi: 3.0.0
+info:
+ title: onecx-bookmark-svc
+ description: Backend service for bookmarks. You can manage bookmarks for your workspaces here
+ version: 1.0.0
+ contact:
+  email: "tkit_dev@1000kit.org"
+ license:
+  name: Apache 2.0
+  url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+ - url: "http://onecx-bookmark-svc:8080"
+tags:
+ - name: bookmarkExportImport
+paths:
+ /exim/v1/bookmark/export:
+  post:
+   security:
+    - oauth2: [ ocx-bm:all, ocx-bm:read ]
+   tags:
+    - bookmarkExportImport
+   description: Export bookmarks by workspace name and scopes
+   operationId: exportBookmarks
+   requestBody:
+    required: true
+    content:
+     application/json:
+      schema:
+       $ref: '#/components/schemas/ExportBookmarksRequest'
+   responses:
+    "200":
+     description: OK
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/BookmarkSnapshot'
+    "404":
+     description: No bookmarks found
+ /exim/v1/bookmark/import:
+  post:
+   security:
+    - oauth2: [ ocx-bm:all, ocx-bm:write ]
+   tags:
+    - bookmarkExportImport
+   description: Import bookmarks
+   operationId: importBookmarks
+   requestBody:
+    required: true
+    content:
+     application/json:
+      schema:
+       $ref: '#/components/schemas/ImportBookmarkRequest'
+   responses:
+    "200":
+     description: Import successful
+    "400":
+     description: Bad request
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/EximProblemDetailResponse'
+components:
+ securitySchemes:
+  oauth2:
+   type: oauth2
+   flows:
+    clientCredentials:
+     tokenUrl: https://oauth.simple.api/token
+     scopes:
+      ocx-bm:all: Grants access to all operations
+      ocx-bm:read: Grants read access
+      ocx-bm:write: Grants write access
+ schemas:
+  ImportBookmarkRequest:
+   type: object
+   properties:
+    snapshot:
+     $ref: '#/components/schemas/BookmarkSnapshot'
+    importMode:
+     $ref: '#/components/schemas/EximMode'
+    workspace:
+     type: string
+  BookmarkSnapshot:
+   type: object
+   properties:
+    id:
+     type: string
+     minLength: 10
+     description: ID of the request
+    created:
+     $ref: '#/components/schemas/OffsetDateTime'
+    bookmarks:
+     type: object
+     nullable: false
+     additionalProperties:
+      type: array
+      items:
+       $ref: '#/components/schemas/EximBookmark'
+  EximBookmark:
+    type: object
+    properties:
+     displayName:
+      type: string
+     endpointName:
+      type: string
+     endpointParameters:
+      type: object
+      additionalProperties:
+       type: string
+     query:
+      type: object
+      additionalProperties:
+       type: string
+     fragment:
+      type: string
+     url:
+      type: string
+     userId:
+      type: string
+     productName:
+      type: string
+     appId:
+      type: string
+     workspaceName:
+      type: string
+     scope:
+      $ref: '#/components/schemas/EximBookmarkScope'
+     position:
+      format: int32
+      type: integer
+  EximBookmarkScope:
+   type: string
+   enum:
+    - PRIVATE
+    - PUBLIC
+  EximMode:
+   type: string
+   enum:
+    - APPEND
+    - OVERWRITE
+  ExportBookmarksRequest:
+   type: object
+   required:
+    - scopes
+   properties:
+    workspaceName:
+      type: string
+    scopes:
+     type: array
+     items:
+      $ref: '#/components/schemas/EximBookmarkScope'
+  EximProblemDetailResponse:
+   type: object
+   properties:
+    errorCode:
+     type: string
+    detail:
+     type: string
+    params:
+     type: array
+     items:
+      $ref: '#/components/schemas/EximProblemDetailParam'
+    invalidParams:
+     type: array
+     items:
+      $ref: '#/components/schemas/EximProblemDetailInvalidParam'
+  EximProblemDetailParam:
+   type: object
+   properties:
+    key:
+     type: string
+    value:
+     type: string
+  EximProblemDetailInvalidParam:
+   type: object
+   properties:
+    name:
+     type: string
+    message:
+     type: string
+  OffsetDateTime:
+   format: date-time
+   type: string
+   example: 2022-03-10T12:15:50-04:00

@@ -32,6 +32,10 @@ public class BookmarkDAOTest {
                 BookmarkDAO.ErrorKeys.ERROR_GET_BY_BOOKMARK_CRITERIA);
         methodExceptionTests(() -> dao.findUserBookmarksByCriteria(null),
                 BookmarkDAO.ErrorKeys.ERROR_GET_BY_BOOKMARK_CRITERIA);
+        methodExceptionTests(() -> dao.findAllBookmarksByWorkspaceAndScope(null, null),
+                BookmarkDAO.ErrorKeys.ERROR_GET_ALL_BY_WORKSPACE_SCOPE);
+        methodExceptionTests(() -> dao.deleteAllByWorkspaceName(null),
+                BookmarkDAO.ErrorKeys.ERROR_DELETE_ALL_BY_WORKSPACE);
     }
 
     void methodExceptionTests(Executable fn, Enum<?> key) {
