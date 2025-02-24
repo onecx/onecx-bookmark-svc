@@ -190,7 +190,6 @@ public class BookmarkRestControllerTest extends AbstractTest {
         BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO = new BookmarkSearchCriteriaDTO();
         bookmarkSearchCriteriaDTO.setWorkspaceName("workspaceName1");
         bookmarkSearchCriteriaDTO.setProductName("someProductName");
-
         var data = given()
                 .contentType(APPLICATION_JSON)
                 .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
@@ -214,6 +213,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
                 .statusCode(BAD_REQUEST.getStatusCode());
 
         bookmarkSearchCriteriaDTO2.setWorkspaceName("workspaceName1");
+        bookmarkSearchCriteriaDTO2.setScope(BookmarkScopeDTO.PUBLIC);
         data = given()
                 .contentType(APPLICATION_JSON)
                 .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
@@ -224,7 +224,20 @@ public class BookmarkRestControllerTest extends AbstractTest {
                 .statusCode(OK.getStatusCode())
                 .extract().as(BookmarkPageResultDTO.class);
 
-        assertThat(3).isEqualTo(data.getStream().size());
+        assertThat(2).isEqualTo(data.getStream().size());
+
+        bookmarkSearchCriteriaDTO2.setScope(BookmarkScopeDTO.PRIVATE);
+        data = given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .body(bookmarkSearchCriteriaDTO2)
+                .post("/search")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .extract().as(BookmarkPageResultDTO.class);
+
+        assertThat(1).isEqualTo(data.getStream().size());
     }
 
     @Test
