@@ -37,7 +37,7 @@ public interface EximBookmarkMapper {
             bookmarksMap.put(Scope.PUBLIC.name(), publics);
         }
         if (!privates.isEmpty()) {
-            bookmarksMap.put(Scope.PRIVATE.name(), new ArrayList<>());
+            bookmarksMap.put(Scope.PRIVATE.name(), privates);
         }
         bookmarkSnapshotDTO.setBookmarks(bookmarksMap);
         return bookmarkSnapshotDTO;
