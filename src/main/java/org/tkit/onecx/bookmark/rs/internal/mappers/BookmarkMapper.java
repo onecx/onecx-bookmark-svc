@@ -5,6 +5,7 @@ import java.util.Map;
 import org.mapstruct.*;
 import org.tkit.onecx.bookmark.domain.criteria.BookmarkSearchCriteria;
 import org.tkit.onecx.bookmark.domain.models.Bookmark;
+import org.tkit.onecx.bookmark.domain.models.enums.Scope;
 import org.tkit.quarkus.jpa.daos.PageResult;
 import org.tkit.quarkus.rs.mappers.OffsetDateTimeMapper;
 
@@ -73,8 +74,9 @@ public interface BookmarkMapper {
     @Mapping(target = "controlTraceabilityManual", ignore = true)
     void updateToPublic(UpdateBookmarkDTO bookmarkDTO, @MappingTarget Bookmark bookmark);
 
-    @Mapping(target = "scope", ignore = true)
     BookmarkSearchCriteria map(BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO);
+
+    Scope map(BookmarkScopeDTO scopeDTO);
 
     @Mapping(target = "removeStreamItem", ignore = true)
     BookmarkPageResultDTO mapPage(PageResult<Bookmark> pageResult);

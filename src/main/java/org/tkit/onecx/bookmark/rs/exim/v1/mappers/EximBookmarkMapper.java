@@ -23,16 +23,22 @@ public interface EximBookmarkMapper {
         bookmarkSnapshotDTO.setId(UUID.randomUUID().toString());
 
         Map<String, List<EximBookmarkDTOV1>> bookmarksMap = new HashMap<>();
-        bookmarksMap.put(Scope.PUBLIC.name(), new ArrayList<>());
-        bookmarksMap.put(Scope.PRIVATE.name(), new ArrayList<>());
+        List<EximBookmarkDTOV1> publics = new ArrayList<>();
+        List<EximBookmarkDTOV1> privates = new ArrayList<>();
 
         bookmarks.forEach(bookmark -> {
             if (Scope.PUBLIC.name().equals(bookmark.getScope().toString())) {
-                bookmarksMap.get(Scope.PUBLIC.name()).add(mapExim(bookmark));
+                publics.add(mapExim(bookmark));
             } else if (Scope.PRIVATE.name().equals(bookmark.getScope().toString())) {
-                bookmarksMap.get(Scope.PRIVATE.name()).add(mapExim(bookmark));
+                privates.add(mapExim(bookmark));
             }
         });
+        if (!publics.isEmpty()) {
+            bookmarksMap.put(Scope.PUBLIC.name(), publics);
+        }
+        if (!privates.isEmpty()) {
+            bookmarksMap.put(Scope.PRIVATE.name(), new ArrayList<>());
+        }
         bookmarkSnapshotDTO.setBookmarks(bookmarksMap);
         return bookmarkSnapshotDTO;
     }
