@@ -66,6 +66,9 @@ app:
         spec:
           kcConfig:
             defaultClientScopes: [ ocx-tn:read ]
-
+    microservice:
+      spec:
+        description: OneCX Bookmark Backend Service
+        name: OneCX Bookmark SVC
 ----
 
