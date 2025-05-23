@@ -1,0 +1,151 @@
+---
+openapi: 3.0.3
+info:
+ title: onecx-product-store image import from file during the start of the application
+ version: 1.0.0
+servers:
+ - url: "http://onecx-product-store-svc:8080"
+tags:
+ - name: imagesInternal
+paths:
+ /internal/images/{refId}:
+  post:
+   security:
+    - oauth2: [ ocx-bm:all, ocx-bm:write ]
+   tags:
+    - imagesInternal
+   description: Upload Images
+   parameters:
+    - in: header
+      name: Content-Length
+      required: true
+      x-onecx:
+       constraints:
+        size:
+         min: 1
+         max: 110000
+         key: bookmark-image-size
+      schema:
+       type: integer
+    - name: refId
+      in: path
+      required: true
+      schema:
+       type: string
+   operationId: uploadImage
+   requestBody:
+    required: true
+    content:
+     image/*:
+      schema:
+       type: string
+       format: binary
+   responses:
+    "201":
+     description: CREATED
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/ImageInfo'
+    "400":
+     description: Bad Request
+  get:
+   security:
+    - oauth2: [ ocx-bm:all, ocx-bm:read ]
+   tags:
+    - imagesInternal
+   description: Get Image by id
+   operationId: getImage
+   parameters:
+    - name: refId
+      in: path
+      required: true
+      schema:
+       type: string
+   responses:
+    "200":
+     description: OK
+     content:
+      image/*:
+       schema:
+        type: string
+        format: binary
+    "400":
+     description: Bad request
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/ProblemDetailResponse'
+  delete:
+   security:
+    - oauth2: [ ocx-bm:all, ocx-bm:delete ]
+   tags:
+    - imagesInternal
+   description: delete Image
+   operationId: deleteImage
+   parameters:
+    - name: refId
+      in: path
+      required: true
+      schema:
+       type: string
+   responses:
+    "200":
+     description: OK
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/ImageInfo'
+    "400":
+     description: Bad request
+     content:
+      application/json:
+       schema:
+        $ref: '#/components/schemas/ProblemDetailResponse'
+components:
+ securitySchemes:
+  oauth2:
+   type: oauth2
+   flows:
+    clientCredentials:
+     tokenUrl: https://oauth.simple.api/token
+     scopes:
+      ocx-bm:all: Grants access to all operations
+      ocx-bm:read: Grants read access
+      ocx-bm:write: Grants write access
+      ocx-bm:delete: Grants access to delete operations
+ schemas:
+  ImageInfo:
+   type: object
+   properties:
+    id:
+     type: string
+  ProblemDetailResponse:
+   type: object
+   properties:
+    errorCode:
+     type: string
+    detail:
+     type: string
+    params:
+     type: array
+     items:
+      $ref: '#/components/schemas/ProblemDetailParam'
+    invalidParams:
+     type: array
+     items:
+      $ref: '#/components/schemas/ProblemDetailInvalidParam'
+  ProblemDetailParam:
+   type: object
+   properties:
+    key:
+     type: string
+    value:
+     type: string
+  ProblemDetailInvalidParam:
+   type: object
+   properties:
+    name:
+     type: string
+    message:
+     type: string

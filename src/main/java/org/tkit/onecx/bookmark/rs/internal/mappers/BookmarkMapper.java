@@ -55,6 +55,7 @@ public interface BookmarkMapper {
     @Mapping(target = "userId", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void update(UpdateBookmarkDTO bookmarkDTO, @MappingTarget Bookmark bookmark);
 
+    @Mapping(target = "imageUrl", ignore = true)
     @Mapping(target = "userId", constant = "")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "endpointName", ignore = true)

@@ -63,4 +63,7 @@ public class Bookmark extends TraceableEntity {
 
     @Column(name = "POSITION", nullable = false)
     private Integer position;
+
+    @Column(name = "IMAGE_URL")
+    private String imageUrl;
 }
