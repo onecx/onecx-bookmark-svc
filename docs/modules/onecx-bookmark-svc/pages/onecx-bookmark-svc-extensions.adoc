@@ -161,6 +161,8 @@ h| Version
 
 | onecx-validator
 
+|===kus-smallrye-context-propagation
+
 | 
 | 
 | 1.3.0
