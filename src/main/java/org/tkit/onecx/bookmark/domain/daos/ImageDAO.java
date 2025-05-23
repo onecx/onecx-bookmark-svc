@@ -1,5 +1,8 @@
 package org.tkit.onecx.bookmark.domain.daos;
 
+import java.util.Collection;
+import java.util.List;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
@@ -30,6 +33,21 @@ public class ImageDAO extends AbstractDAO<Image> {
         }
     }
 
+    public List<Image> findByRefIds(Collection<String> refIds) {
+        try {
+            var cb = this.getEntityManager().getCriteriaBuilder();
+            var cq = cb.createQuery(Image.class);
+            var root = cq.from(Image.class);
+            if (!refIds.isEmpty()) {
+                cq.where(root.get(Image_.REF_ID).in(refIds));
+            }
+            return this.getEntityManager().createQuery(cq).getResultList();
+
+        } catch (Exception ex) {
+            throw new DAOException(ErrorKeys.ERROR_FIND_REF_IDS, ex);
+        }
+    }
+
     @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = DAOException.class)
     public void deleteQueryByRefId(String refId) throws DAOException {
         try {
@@ -48,7 +66,7 @@ public class ImageDAO extends AbstractDAO<Image> {
     public enum ErrorKeys {
 
         FAILED_TO_DELETE_BY_REF_ID_QUERY,
-
-        FIND_ENTITY_BY_REF_ID_FAILED
+        FIND_ENTITY_BY_REF_ID_FAILED,
+        ERROR_FIND_REF_IDS
     }
 }

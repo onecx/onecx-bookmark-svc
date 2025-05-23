@@ -131,6 +131,16 @@ components:
       type: integer
      imageUrl:
       type: string
+     image:
+      $ref: '#/components/schemas/Image'
+  Image:
+   type: object
+   properties:
+    imageData:
+     type: string
+     format: byte
+    mimeType:
+     type: string
   EximBookmarkScope:
    type: string
    enum:

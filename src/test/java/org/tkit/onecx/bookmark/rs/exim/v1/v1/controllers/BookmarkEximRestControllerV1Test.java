@@ -41,6 +41,9 @@ class BookmarkEximRestControllerV1Test extends AbstractTest {
 
         assertThat(data).isNotNull();
 
+        //add image to snapshot:
+        data.getBookmarks().get("PUBLIC").get(0)
+                .setImage(new ImageDTOV1().imageData(new byte[] { 1, 2, 3 }).mimeType("image/*"));
         ImportBookmarkRequestDTOV1 importBookmarkRequestDTOV1 = new ImportBookmarkRequestDTOV1();
         importBookmarkRequestDTOV1.setSnapshot(data);
         importBookmarkRequestDTOV1.setWorkspace("workspaceName1");
@@ -116,5 +119,24 @@ class BookmarkEximRestControllerV1Test extends AbstractTest {
                 .post("/import")
                 .then()
                 .statusCode(BAD_REQUEST.getStatusCode());
+    }
+
+    @Test
+    void exportSnapshotNoBookmarksTest() {
+        ExportBookmarksRequestDTOV1 requestDTOV1 = new ExportBookmarksRequestDTOV1();
+        requestDTOV1.setWorkspaceName("workspaceName1234567");
+        requestDTOV1.setScopes(List.of(EximBookmarkScopeDTOV1.PRIVATE));
+        var data = given()
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .contentType(APPLICATION_JSON)
+                .body(requestDTOV1)
+                .post("/export")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .extract().as(BookmarkSnapshotDTOV1.class);
+
+        assertThat(data).isNotNull();
+        assertThat(data.getBookmarks()).isEmpty();
     }
 }
