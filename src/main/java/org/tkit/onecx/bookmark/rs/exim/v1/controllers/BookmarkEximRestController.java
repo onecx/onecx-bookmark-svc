@@ -1,7 +1,5 @@
 package org.tkit.onecx.bookmark.rs.exim.v1.controllers;
 
-import java.util.stream.Collectors;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
@@ -38,7 +36,7 @@ public class BookmarkEximRestController implements BookmarkExportImportApi {
     public Response exportBookmarks(ExportBookmarksRequestDTOV1 exportBookmarksRequestDTO) {
         var bookmarks = dao.findAllBookmarksByWorkspaceAndScope(exportBookmarksRequestDTO.getWorkspaceName(),
                 bookmarkMapper.mapScopeList(exportBookmarksRequestDTO.getScopes())).toList();
-        var images = imageDAO.findByRefIds(bookmarks.stream().map(Bookmark::getId).collect(Collectors.toList()));
+        var images = imageDAO.findByRefIds(bookmarks.stream().map(Bookmark::getId).toList());
         BookmarkSnapshotDTOV1 snapshotDTO = bookmarkMapper.mapToSnapshot(bookmarks, images);
         return Response.status(Response.Status.OK).entity(snapshotDTO).build();
     }

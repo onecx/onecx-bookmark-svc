@@ -35,17 +35,15 @@ public class BookmarkService {
         List<Image> createImages = new ArrayList<>();
 
         requestDTO.getSnapshot().getBookmarks().values()
-                .forEach(bookmarkList -> {
-                    bookmarkList.forEach(eximBookmarkDTOV1 -> {
-                        var createdBookmark = dao
-                                .create(bookmarkMapper.map(eximBookmarkDTOV1, userId, requestDTO.getWorkspace()));
-                        if (eximBookmarkDTOV1.getImage() != null) {
-                            var imageToImport = bookmarkMapper.createImage(eximBookmarkDTOV1.getImage(),
-                                    createdBookmark.getId());
-                            createImages.add(imageToImport);
-                        }
-                    });
-                });
+                .forEach(bookmarkList -> bookmarkList.forEach(eximBookmarkDTOV1 -> {
+                    var createdBookmark = dao
+                            .create(bookmarkMapper.map(eximBookmarkDTOV1, userId, requestDTO.getWorkspace()));
+                    if (eximBookmarkDTOV1.getImage() != null) {
+                        var imageToImport = bookmarkMapper.createImage(eximBookmarkDTOV1.getImage(),
+                                createdBookmark.getId());
+                        createImages.add(imageToImport);
+                    }
+                }));
 
         if (requestDTO.getImportMode().equals(EximModeDTOV1.OVERWRITE)) {
             dao.deleteAllByWorkspaceName(requestDTO.getWorkspace());
