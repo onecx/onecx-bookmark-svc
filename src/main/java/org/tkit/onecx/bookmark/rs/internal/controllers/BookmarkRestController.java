@@ -14,6 +14,7 @@ import jakarta.ws.rs.core.UriInfo;
 import org.jboss.resteasy.reactive.RestResponse;
 import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
 import org.tkit.onecx.bookmark.domain.daos.BookmarkDAO;
+import org.tkit.onecx.bookmark.domain.services.BookmarkService;
 import org.tkit.onecx.bookmark.rs.internal.mappers.BookmarkMapper;
 import org.tkit.onecx.bookmark.rs.internal.mappers.ExceptionMapper;
 import org.tkit.quarkus.context.ApplicationContext;
@@ -38,6 +39,9 @@ public class BookmarkRestController implements BookmarksInternalApi {
     @Inject
     ExceptionMapper exceptionMapper;
 
+    @Inject
+    BookmarkService bookmarkService;
+
     @Context
     UriInfo uriInfo;
 
@@ -54,7 +58,7 @@ public class BookmarkRestController implements BookmarksInternalApi {
 
     @Override
     public Response deleteBookmarkById(String id) {
-        bookmarkDAO.deleteQueryById(id);
+        bookmarkService.deleteBookmark(id);
         return Response.noContent().build();
     }
 

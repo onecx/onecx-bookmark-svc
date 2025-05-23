@@ -73,7 +73,7 @@ public interface ExceptionMapper {
         return path.toString();
     }
 
-    enum ErrorKeys {
+    public enum ErrorKeys {
         CONSTRAINT_VIOLATIONS,
         OPTIMISTIC_LOCK
     }

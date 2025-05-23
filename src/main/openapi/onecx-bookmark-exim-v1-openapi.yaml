@@ -129,6 +129,8 @@ components:
      position:
       format: int32
       type: integer
+     imageUrl:
+      type: string
   EximBookmarkScope:
    type: string
    enum:

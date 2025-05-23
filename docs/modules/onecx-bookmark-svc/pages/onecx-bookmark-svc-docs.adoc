@@ -32,6 +32,7 @@ tkit.rs.context.tenant-id.enabled=true
 %prod.quarkus.datasource.jdbc.url=${DB_URL:jdbc:postgresql://postgresdb:5432/onecx-bookmark?sslmode=disable}
 %prod.quarkus.datasource.username=${DB_USER:onecx-bookmark}
 %prod.quarkus.datasource.password=${DB_PWD:onecx-bookmark}
+onecx.validator.values.mapping.bookmark-image-size=bookmark-image-size
 ----
 ====
 

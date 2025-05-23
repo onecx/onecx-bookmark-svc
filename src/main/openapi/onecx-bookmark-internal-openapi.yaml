@@ -232,6 +232,8 @@ components:
         position:
           format: int32
           type: integer
+        imageUrl:
+          type: string
     BookmarkPageResult:
       type: object
       properties:
@@ -292,6 +294,8 @@ components:
         position:
           format: int32
           type: integer
+        imageUrl:
+          type: string
     UpdateBookmark:
       required:
         - displayName
@@ -324,6 +328,8 @@ components:
         url:
           type: string
         userId:
+          type: string
+        imageUrl:
           type: string
     BookmarkScope:
       type: string

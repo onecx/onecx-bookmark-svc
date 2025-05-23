@@ -8,6 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 import org.tkit.onecx.bookmark.domain.daos.BookmarkDAO;
+import org.tkit.onecx.bookmark.domain.daos.ImageDAO;
 import org.tkit.onecx.bookmark.domain.models.Bookmark;
 import org.tkit.onecx.bookmark.rs.exim.v1.mappers.EximBookmarkMapper;
 import org.tkit.quarkus.context.ApplicationContext;
@@ -24,6 +25,9 @@ public class BookmarkService {
     @Inject
     BookmarkDAO dao;
 
+    @Inject
+    ImageDAO imageDAO;
+
     @Transactional
     public void importBookmarks(ImportBookmarkRequestDTOV1 requestDTO) {
         var userId = ApplicationContext.get().getPrincipal();
@@ -37,5 +41,14 @@ public class BookmarkService {
             dao.deleteAllByWorkspaceName(requestDTO.getWorkspace());
         }
         dao.create(allBookmarks);
+    }
+
+    @Transactional
+    public void deleteBookmark(String id) {
+        var bookmark = dao.findById(id);
+        if (bookmark != null) {
+            dao.delete(bookmark);
+            imageDAO.deleteQueryByRefId(bookmark.getId());
+        }
     }
 }

@@ -306,6 +306,16 @@ public class BookmarkRestControllerTest extends AbstractTest {
         assertThat(output).isNotNull();
         assertThat(output.getStream()).isNotNull();
         assertThat(output.getStream().isEmpty());
+
+        // delete non existing => ignore
+        given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
+                .pathParam("id", "11-99999")
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .delete("{id}")
+                .then()
+                .statusCode(NO_CONTENT.getStatusCode());
     }
 
 }
