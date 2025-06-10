@@ -55,24 +55,18 @@ public interface BookmarkMapper {
     @Mapping(target = "userId", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void update(UpdateBookmarkDTO bookmarkDTO, @MappingTarget Bookmark bookmark);
 
-    @Mapping(target = "imageUrl", ignore = true)
-    @Mapping(target = "userId", constant = "")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "endpointName", ignore = true)
-    @Mapping(target = "persisted", ignore = true)
-    @Mapping(target = "query", ignore = true)
-    @Mapping(target = "fragment", ignore = true)
-    @Mapping(target = "url", ignore = true)
-    @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "workspaceName", ignore = true)
+    @Mapping(target = "tenantId", ignore = true)
     @Mapping(target = "productName", ignore = true)
-    @Mapping(target = "appId", ignore = true)
-    @Mapping(target = "endpointParameters", ignore = true)
-    @Mapping(target = "creationDate", ignore = true)
-    @Mapping(target = "creationUser", ignore = true)
-    @Mapping(target = "modificationDate", ignore = true)
+    @Mapping(target = "persisted", ignore = true)
     @Mapping(target = "modificationUser", ignore = true)
+    @Mapping(target = "modificationDate", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "creationUser", ignore = true)
+    @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "controlTraceabilityManual", ignore = true)
+    @Mapping(target = "appId", ignore = true)
+    @Mapping(target = "userId", constant = "")
     void updateToPublic(UpdateBookmarkDTO bookmarkDTO, @MappingTarget Bookmark bookmark);
 
     BookmarkSearchCriteria map(BookmarkSearchCriteriaDTO bookmarkSearchCriteriaDTO);
