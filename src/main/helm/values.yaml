@@ -12,7 +12,7 @@ app:
         enabled: true
         spec:
           kcConfig:
-            defaultClientScopes: [ ocx-tn:read, ocx-pa:read ]
+            defaultClientScopes: [ ocx-tn:read, ocx-pa-ap:read, ocx-pa-me:write ]
     microservice:
       spec:
         description: OneCX Bookmark Backend Service
