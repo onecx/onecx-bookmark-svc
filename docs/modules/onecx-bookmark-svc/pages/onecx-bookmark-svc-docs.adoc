@@ -35,7 +35,7 @@ tkit.rs.context.tenant-id.enabled=true
 %prod.quarkus.datasource.password=${DB_PWD:onecx-bookmark}
 %prod.quarkus.oidc-client.client-id=${quarkus.application.name}
 onecx.validator.values.mapping.bookmark-image-size=bookmark-image-size
-onecx.parameters.product-name=onecx-product
+onecx.parameters.product-name=onecx-bookmark
 ----
 ====
 
