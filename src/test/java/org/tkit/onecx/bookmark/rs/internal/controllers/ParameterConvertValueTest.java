@@ -28,7 +28,7 @@ import io.smallrye.config.SmallRyeConfig;
 @QuarkusTest
 @TestHTTPEndpoint(ImagesInternalRestController.class)
 @GenerateKeycloakClient(clientName = "testClient", scopes = { "ocx-bm:read", "ocx-bm:write", "ocx-bm:delete", "ocx-bm:all" })
-public class ParameterConvertValueTest extends AbstractTest {
+class ParameterConvertValueTest extends AbstractTest {
     @InjectMock
     ParametersConfig parametersConfig;
 
@@ -99,7 +99,7 @@ public class ParameterConvertValueTest extends AbstractTest {
 
     @Test
     void uploadImageConvertValueException() {
-        var res = given()
+        given()
                 .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .pathParam("refId", "productName")
                 .when()
