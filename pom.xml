@@ -158,6 +158,17 @@
             <groupId>org.tkit.onecx.quarkus</groupId>
             <artifactId>onecx-parameters</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.mockserver</groupId>
+            <artifactId>quarkus-mockserver-test</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger.parser.v3</groupId>
+                    <artifactId>swagger-parser</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

@@ -8,6 +8,7 @@ import jakarta.persistence.OptimisticLockException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Path;
+import jakarta.validation.ValidationException;
 import jakarta.ws.rs.core.Response;
 
 import org.jboss.resteasy.reactive.RestResponse;
@@ -73,8 +74,14 @@ public interface ExceptionMapper {
         return path.toString();
     }
 
+    default RestResponse<ProblemDetailResponseDTO> convertValue(ValidationException ex) {
+        var dto = exception(ErrorKeys.VALIDATION_EXCEPTION.name(), ex.getCause().toString());
+        return RestResponse.status(Response.Status.BAD_REQUEST, dto);
+    }
+
     public enum ErrorKeys {
         CONSTRAINT_VIOLATIONS,
-        OPTIMISTIC_LOCK
+        OPTIMISTIC_LOCK,
+        VALIDATION_EXCEPTION
     }
 }
