@@ -1,0 +1,18 @@
+[
+  {
+    "id": "0",
+    "httpRequest": {
+      "method": "GET",
+      "path": "/v2/parameters/onecx-bookmark/onecx-bookmark-svc"
+    },
+    "httpResponse": {
+      "body": {
+        "type": "JSON",
+        "json": {
+          "bookmark-image-size": 1000
+        },
+        "contentType": "application/json"
+      }
+    }
+  }
+]

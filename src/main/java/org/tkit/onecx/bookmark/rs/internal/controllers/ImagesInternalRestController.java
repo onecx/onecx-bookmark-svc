@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ValidationException;
 import jakarta.ws.rs.core.*;
 
 import org.jboss.resteasy.reactive.RestResponse;
@@ -82,6 +83,11 @@ public class ImagesInternalRestController implements ImagesInternalApi {
     @ServerExceptionMapper
     public RestResponse<ProblemDetailResponseDTO> constraint(ConstraintViolationException ex) {
         return exceptionMapper.constraint(ex);
+    }
+
+    @ServerExceptionMapper
+    public RestResponse<ProblemDetailResponseDTO> constraint(ValidationException ex) {
+        return exceptionMapper.convertValue(ex);
     }
 
 }
