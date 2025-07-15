@@ -12,13 +12,13 @@ h| Version
 
 | https://onecx.github.io/docs/onecx-quarkus/current/onecx-quarkus/onecx-core.html[Link]
 | 
-| 1.4.0
+| 1.6.0
 
 | onecx-tenant
 
 | https://onecx.github.io/docs/onecx-quarkus/current/onecx-quarkus/onecx-tenant.html[Link]
-| https://github.com/onecx/onecx-quarkus/blob/1.4.0/docs/modules/onecx-quarkus/pages/includes/onecx-tenant.adoc[Link]
-| 1.4.0
+| https://github.com/onecx/onecx-quarkus/blob/1.6.0/docs/modules/onecx-quarkus/pages/includes/onecx-tenant.adoc[Link]
+| 1.6.0
 
 | quarkus-oidc
 
@@ -143,8 +143,8 @@ h| Version
 | onecx-parameters
 
 | https://onecx.github.io/docs/onecx-quarkus/current/onecx-quarkus/onecx-parameters.html[Link]
-| https://github.com/onecx/onecx-quarkus/blob/1.4.0/docs/modules/onecx-quarkus/pages/includes/onecx-parameters.adoc[Link]
-| 1.4.0
+| https://github.com/onecx/onecx-quarkus/blob/1.6.0/docs/modules/onecx-quarkus/pages/includes/onecx-parameters.adoc[Link]
+| 1.6.0
 
 | tkit-quarkus-security
 
@@ -169,7 +169,7 @@ h| Version
 
 | 
 | 
-| 1.4.0
+| 1.6.0
 
 
 |===

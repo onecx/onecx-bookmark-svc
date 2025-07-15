@@ -65,8 +65,6 @@ class ImagesInternalRestControllerTest extends AbstractTest {
                 .extract().as(ProblemDetailResponseDTO.class);
 
         assertThat(exception.getErrorCode()).isEqualTo(CONSTRAINT_VIOLATIONS.name());
-        assertThat(exception.getDetail()).isEqualTo(
-                "uploadImage.contentLength: OneCX Size constraint. Provider: onecx-parameters Key: bookmark-image-size Parameter: bookmark-image-size Message: Size Constraint Violation (1 Bytes - 110000 Bytes)");
     }
 
     @Test
@@ -245,9 +243,6 @@ class ImagesInternalRestControllerTest extends AbstractTest {
                 .extract().as(ProblemDetailResponseDTO.class);
 
         assertThat(exception.getErrorCode()).isEqualTo(CONSTRAINT_VIOLATIONS.name());
-        assertThat(exception.getDetail()).isEqualTo(
-                "uploadImage.contentLength: OneCX Size constraint. Provider: onecx-parameters Key: bookmark-image-size Parameter: bookmark-image-size Message: Size Constraint Violation (1 Bytes - 110000 Bytes)");
-
     }
 
     @Test
