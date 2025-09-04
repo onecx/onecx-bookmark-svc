@@ -1,18 +1,13 @@
 openapi: 3.0.0
 info:
-  title: onecx-bookmark-svc
-  description: Backend service for bookmarks. You can manage bookmarks for your workspaces here
+  title: onecx-bookmark internal service
+  description: This API provides endpoints to manage Bookmarks
   version: 1.0.0
-  contact:
-    email: "tkit_dev@1000kit.org"
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
 servers:
   - url: "http://onecx-bookmark-svc:8080"
 tags:
   - name: bookmarksInternal
-  - name: staticBookmarksInternal
+    description: Managing Bookmarks
 paths:
   /internal/bookmarks:
     post:
@@ -20,7 +15,7 @@ paths:
         - oauth2: [ ocx-bm:all, ocx-bm:write ]
       tags:
         - bookmarksInternal
-      description: create bookmark item
+      description: Create a new bookmark
       operationId: createNewBookmark
       requestBody:
         required: true
@@ -30,7 +25,7 @@ paths:
               $ref: '#/components/schemas/CreateBookmark'
       responses:
         '201':
-          description: Bookmark created
+          description: Bookmark created successfully
         '400':
           description: Bad request
           content:
@@ -43,7 +38,7 @@ paths:
         - oauth2: [ ocx-bm:all, ocx-bm:read ]
       tags:
         - bookmarksInternal
-      description: search bookmarks by criteria
+      description: Search bookmarks by search criteria
       operationId: searchBookmarksByCriteria
       requestBody:
         required: true
@@ -53,7 +48,7 @@ paths:
               $ref: '#/components/schemas/BookmarkSearchCriteria'
       responses:
         '200':
-          description: A list of bookmarks
+          description: Bookmark search results retrieved successfully
           content:
             application/json:
               schema:
@@ -70,7 +65,7 @@ paths:
         - oauth2: [ ocx-bm:all, ocx-bm:read ]
       tags:
         - bookmarksInternal
-      description: search user bookmarks by criteria
+      description: Search bookmarks by criteria for the requesting user
       operationId: searchUserBookmarksByCriteria
       requestBody:
         required: true
@@ -80,7 +75,7 @@ paths:
               $ref: '#/components/schemas/BookmarkSearchCriteria'
       responses:
         '200':
-          description: A list of bookmarks
+          description: Bookmark search results retrieved successfully
           content:
             application/json:
               schema:
@@ -97,7 +92,7 @@ paths:
         - oauth2: [ ocx-bm:all, ocx-bm:write ]
       tags:
         - bookmarksInternal
-      description: Update a bookmark's displayName
+      description: Update a bookmark by its id
       operationId: updateBookmark
       parameters:
         - name: id
@@ -113,7 +108,7 @@ paths:
               $ref: '#/components/schemas/UpdateBookmark'
       responses:
         "204":
-          description: Bookmark updated
+          description: Bookmark updated successfully
         "400":
           description: Bad request
           content:
@@ -127,7 +122,7 @@ paths:
         - oauth2: [ ocx-bm:all, ocx-bm:delete ]
       tags:
         - bookmarksInternal
-      description: Delete a bookmark by id
+      description: Delete a bookmark by its id
       operationId: deleteBookmarkById
       parameters:
         - name: id
@@ -137,7 +132,7 @@ paths:
             type: string
       responses:
         "204":
-          description: No Content
+          description: Bookmark deleted successfully
         "400":
           description: Bad request
           content:

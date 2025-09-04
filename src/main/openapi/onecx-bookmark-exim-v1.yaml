@@ -1,18 +1,14 @@
 ---
 openapi: 3.0.0
 info:
- title: onecx-bookmark-svc
- description: Backend service for bookmarks. You can manage bookmarks for your workspaces here
+ title: onecx-bookmark export and import service V1
+ description: This API provides endpoints to export and import Bookmarks.
  version: 1.0.0
- contact:
-  email: "tkit_dev@1000kit.org"
- license:
-  name: Apache 2.0
-  url: http://www.apache.org/licenses/LICENSE-2.0.html
 servers:
  - url: "http://onecx-bookmark-svc:8080"
 tags:
  - name: bookmarkExportImport
+   description: Exporting and Importing Bookmarks
 paths:
  /exim/v1/bookmark/export:
   post:
@@ -30,13 +26,13 @@ paths:
        $ref: '#/components/schemas/ExportBookmarksRequest'
    responses:
     "200":
-     description: OK
+     description: Exported bookmarks successfully
      content:
       application/json:
        schema:
         $ref: '#/components/schemas/BookmarkSnapshot'
     "404":
-     description: No bookmarks found
+     description: Bookmarks not found
  /exim/v1/bookmark/import:
   post:
    security:
@@ -53,7 +49,7 @@ paths:
        $ref: '#/components/schemas/ImportBookmarkRequest'
    responses:
     "200":
-     description: Import successful
+     description: Bookmarks imported successfully
     "400":
      description: Bad request
      content:
