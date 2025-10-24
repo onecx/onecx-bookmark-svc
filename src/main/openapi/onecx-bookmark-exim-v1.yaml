@@ -33,7 +33,7 @@ paths:
         $ref: '#/components/schemas/BookmarkSnapshot'
     "404":
      description: Bookmarks not found
- /exim/v1/bookmark/import:
+ /exim/v1/bookmark/{workspaceName}/import:
   post:
    security:
     - oauth2: [ ocx-bm:all, ocx-bm:write ]
@@ -41,12 +41,22 @@ paths:
     - bookmarkExportImport
    description: Import bookmarks
    operationId: importBookmarks
+   parameters:
+    - in: path
+      name: workspaceName
+      required: true
+      schema:
+       type: string
+    - in: query
+      name: importMode
+      schema:
+       $ref: '#/components/schemas/EximMode'
    requestBody:
     required: true
     content:
      application/json:
       schema:
-       $ref: '#/components/schemas/ImportBookmarkRequest'
+       $ref: '#/components/schemas/BookmarkSnapshot'
    responses:
     "200":
      description: Bookmarks imported successfully
@@ -68,15 +78,6 @@ components:
       ocx-bm:read: Grants read access
       ocx-bm:write: Grants write access
  schemas:
-  ImportBookmarkRequest:
-   type: object
-   properties:
-    snapshot:
-     $ref: '#/components/schemas/BookmarkSnapshot'
-    importMode:
-     $ref: '#/components/schemas/EximMode'
-    workspace:
-     type: string
   BookmarkSnapshot:
    type: object
    properties:
@@ -117,8 +118,6 @@ components:
      productName:
       type: string
      appId:
-      type: string
-     workspaceName:
       type: string
      scope:
       $ref: '#/components/schemas/EximBookmarkScope'
