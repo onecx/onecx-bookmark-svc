@@ -44,28 +44,27 @@ class BookmarkEximRestControllerV1Test extends AbstractTest {
         //add image to snapshot:
         data.getBookmarks().get("PUBLIC").get(0)
                 .setImage(new ImageDTOV1().imageData(new byte[] { 1, 2, 3 }).mimeType("image/*"));
-        ImportBookmarkRequestDTOV1 importBookmarkRequestDTOV1 = new ImportBookmarkRequestDTOV1();
-        importBookmarkRequestDTOV1.setSnapshot(data);
-        importBookmarkRequestDTOV1.setWorkspace("workspaceName1");
-        importBookmarkRequestDTOV1.setImportMode(EximModeDTOV1.OVERWRITE);
         //import and overwrite in same workspace
         given()
                 .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .contentType(APPLICATION_JSON)
-                .body(importBookmarkRequestDTOV1)
-                .post("/import")
+                .body(data)
+                .pathParam("workspaceName", "workspaceName1")
+                .queryParam("importMode", EximModeDTOV1.OVERWRITE)
+                .post("/{workspaceName}/import")
                 .then()
                 .statusCode(OK.getStatusCode());
 
-        importBookmarkRequestDTOV1.setImportMode(EximModeDTOV1.APPEND);
         //without overwrite
         given()
                 .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .contentType(APPLICATION_JSON)
-                .body(importBookmarkRequestDTOV1)
-                .post("/import")
+                .body(data)
+                .pathParam("workspaceName", "workspaceName1")
+                .queryParam("importMode", EximModeDTOV1.APPEND)
+                .post("/{workspaceName}/import")
                 .then()
                 .statusCode(OK.getStatusCode());
 
@@ -116,7 +115,8 @@ class BookmarkEximRestControllerV1Test extends AbstractTest {
         given()
                 .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
                 .contentType(APPLICATION_JSON)
-                .post("/import")
+                .pathParam("workspaceName", "someWorkspace")
+                .post("/{workspaceName}/import")
                 .then()
                 .statusCode(BAD_REQUEST.getStatusCode());
     }

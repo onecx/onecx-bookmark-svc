@@ -13,8 +13,8 @@ import org.tkit.quarkus.log.cdi.LogService;
 
 import gen.org.tkit.onecx.bookmark.rs.exim.v1.BookmarkExportImportApi;
 import gen.org.tkit.onecx.bookmark.rs.exim.v1.model.BookmarkSnapshotDTOV1;
+import gen.org.tkit.onecx.bookmark.rs.exim.v1.model.EximModeDTOV1;
 import gen.org.tkit.onecx.bookmark.rs.exim.v1.model.ExportBookmarksRequestDTOV1;
-import gen.org.tkit.onecx.bookmark.rs.exim.v1.model.ImportBookmarkRequestDTOV1;
 
 @LogService
 @ApplicationScoped
@@ -42,8 +42,9 @@ public class BookmarkEximRestController implements BookmarkExportImportApi {
     }
 
     @Override
-    public Response importBookmarks(ImportBookmarkRequestDTOV1 bookmarkSnapshotDTO) {
-        bookmarkService.importBookmarks(bookmarkSnapshotDTO);
+    public Response importBookmarks(String workspaceName, BookmarkSnapshotDTOV1 bookmarkSnapshotDTO,
+            EximModeDTOV1 importMode) {
+        bookmarkService.importBookmarks(bookmarkSnapshotDTO, workspaceName, importMode);
         return Response.status(Response.Status.OK).build();
     }
 }
