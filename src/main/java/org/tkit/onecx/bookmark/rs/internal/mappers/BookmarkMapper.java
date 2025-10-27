@@ -75,4 +75,19 @@ public interface BookmarkMapper {
 
     @Mapping(target = "removeStreamItem", ignore = true)
     BookmarkPageResultDTO mapPage(PageResult<Bookmark> pageResult);
+
+    default String mapTarget(TargetDTO targetDTO) {
+        if (targetDTO != null) {
+            return targetDTO.toString();
+        }
+        return "_self";
+    }
+
+    default TargetDTO mapTarget(String value) {
+        try {
+            return TargetDTO.fromValue(value);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            return TargetDTO._SELF;
+        }
+    }
 }

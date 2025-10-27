@@ -229,6 +229,13 @@ components:
           type: integer
         imageUrl:
           type: string
+        external:
+          type: boolean
+        target:
+          $ref: '#/components/schemas/Target'
+        disabled:
+          type: boolean
+          default: false
     BookmarkPageResult:
       type: object
       properties:
@@ -291,6 +298,13 @@ components:
           type: integer
         imageUrl:
           type: string
+        external:
+          type: boolean
+        target:
+          $ref: '#/components/schemas/Target'
+        disabled:
+          type: boolean
+          default: false
     UpdateBookmark:
       required:
         - displayName
@@ -326,11 +340,23 @@ components:
           type: string
         imageUrl:
           type: string
+        external:
+          type: boolean
+        target:
+          $ref: '#/components/schemas/Target'
+        disabled:
+          type: boolean
+          default: false
     BookmarkScope:
       type: string
       enum:
         - PRIVATE
         - PUBLIC
+    Target:
+      type: string
+      enum:
+        - _self
+        - _blank
     ProblemDetailResponse:
       type: object
       properties:
