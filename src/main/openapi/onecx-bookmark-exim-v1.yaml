@@ -128,6 +128,13 @@ components:
       type: string
      image:
       $ref: '#/components/schemas/Image'
+     external:
+      type: boolean
+     target:
+      $ref: '#/components/schemas/EximTarget'
+     disabled:
+      type: boolean
+      default: false
   Image:
    type: object
    properties:
@@ -141,6 +148,11 @@ components:
    enum:
     - PRIVATE
     - PUBLIC
+  EximTarget:
+   type: string
+   enum:
+    - _self
+    - _blank
   EximMode:
    type: string
    enum:

@@ -66,4 +66,13 @@ public class Bookmark extends TraceableEntity {
 
     @Column(name = "IMAGE_URL")
     private String imageUrl;
+
+    @Column(name = "EXTERNAL")
+    private Boolean external;
+
+    @Column(name = "TARGET")
+    private String target;
+
+    @Column(name = "DISABLED")
+    private Boolean disabled;
 }

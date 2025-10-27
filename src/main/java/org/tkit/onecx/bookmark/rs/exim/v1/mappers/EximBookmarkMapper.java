@@ -9,10 +9,7 @@ import org.tkit.onecx.bookmark.domain.models.Image;
 import org.tkit.onecx.bookmark.domain.models.enums.Scope;
 import org.tkit.quarkus.rs.mappers.OffsetDateTimeMapper;
 
-import gen.org.tkit.onecx.bookmark.rs.exim.v1.model.BookmarkSnapshotDTOV1;
-import gen.org.tkit.onecx.bookmark.rs.exim.v1.model.EximBookmarkDTOV1;
-import gen.org.tkit.onecx.bookmark.rs.exim.v1.model.EximBookmarkScopeDTOV1;
-import gen.org.tkit.onecx.bookmark.rs.exim.v1.model.ImageDTOV1;
+import gen.org.tkit.onecx.bookmark.rs.exim.v1.model.*;
 
 @Mapper(uses = { OffsetDateTimeMapper.class })
 public interface EximBookmarkMapper {
@@ -103,4 +100,19 @@ public interface EximBookmarkMapper {
     @Mapping(target = "creationDate", ignore = true)
     @Mapping(target = "controlTraceabilityManual", ignore = true)
     Image createImage(ImageDTOV1 image, String refId);
+
+    default String mapTarget(EximTargetDTOV1 targetDTO) {
+        if (targetDTO != null) {
+            return targetDTO.toString();
+        }
+        return "_self";
+    }
+
+    default EximTargetDTOV1 mapTarget(String value) {
+        try {
+            return EximTargetDTOV1.fromValue(value);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            return EximTargetDTOV1._SELF;
+        }
+    }
 }
