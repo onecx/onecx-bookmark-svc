@@ -17,3 +17,15 @@ app:
       spec:
         description: OneCX Bookmark Backend Service
         name: OneCX Bookmark SVC
+    parameter:
+      enabled: true
+      spec:
+        parameters:
+          default:
+            bookmark-image-size:
+              displayName: Bookmark Image Size Parameter
+              description:
+              value:
+                min: 1
+                max: 110000
+                message: Image Size Constraint Violation
