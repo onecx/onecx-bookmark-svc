@@ -21,7 +21,7 @@ import io.quarkus.test.junit.QuarkusTest;
 @TestHTTPEndpoint(BookmarkRestController.class)
 @WithDBData(value = "data/test-internal.xml", deleteBeforeInsert = true, deleteAfterTest = true, rinseAndRepeat = true)
 @GenerateKeycloakClient(clientName = "testClient", scopes = "ocx-bm:all")
-public class BookmarkRestControllerTest extends AbstractTest {
+class BookmarkRestControllerTest extends AbstractTest {
 
     @Test
     void createBookmark() {
@@ -61,7 +61,7 @@ public class BookmarkRestControllerTest extends AbstractTest {
 
         assertThat(dto).isNotNull();
         assertThat(dto.getStream()).isNotNull();
-        assertThat(dto.getStream().size()).isEqualTo(1);
+        assertThat(1).isEqualTo(dto.getStream().size());
         assertThat(dto.getStream().get(0).getEndpointParameters()).isNull();
     }
 
