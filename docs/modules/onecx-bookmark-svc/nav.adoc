@@ -1,1 +1,0 @@
-* xref:onecx-bookmark-svc:index.adoc[Backend Service]
