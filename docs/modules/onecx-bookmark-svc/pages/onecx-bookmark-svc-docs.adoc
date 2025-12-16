@@ -20,6 +20,7 @@ quarkus.hibernate-orm.database.generation=validate
 quarkus.hibernate-orm.multitenant=DISCRIMINATOR
 quarkus.hibernate-orm.jdbc.timezone=UTC
 quarkus.hibernate-orm.metrics.enabled=true
+quarkus.hibernate-orm.mapping.format.global=ignore
 quarkus.liquibase.migrate-at-start=true
 quarkus.liquibase.validate-on-migrate=true
 tkit.dataimport.enabled=false
@@ -33,7 +34,6 @@ tkit.rs.context.tenant-id.enabled=true
 %prod.quarkus.datasource.jdbc.url=${DB_URL:jdbc:postgresql://postgresdb:5432/onecx-bookmark?sslmode=disable}
 %prod.quarkus.datasource.username=${DB_USER:onecx-bookmark}
 %prod.quarkus.datasource.password=${DB_PWD:onecx-bookmark}
-%prod.quarkus.oidc-client.client-id=${quarkus.application.name}
 onecx.validator.values.mapping.bookmark-image-size=bookmark-image-size
 onecx.parameters.product-name=onecx-bookmark
 ----
@@ -88,5 +88,8 @@ app:
                 min: 1
                 max: 110000
                 message: Image Size Constraint Violation
+----
+
+lation
 ----
 
