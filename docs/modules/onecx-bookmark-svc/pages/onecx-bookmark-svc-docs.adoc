@@ -88,11 +88,3 @@ app:
                 message: Image Size Constraint Violation
 ----
 
-1
-                max: 110000
-                message: Image Size Constraint Violation
-----
-
-lation
-----
-

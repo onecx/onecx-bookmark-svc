@@ -172,21 +172,4 @@ h| Version
 | 2.3.0
 
 
-|===e-docker.adoc[Link]
-| 3.27.1
-
-
-| quarkus-smallrye-context-propagation
-
-| 
-| 
-| 3.27.1
-
-| onecx-validator
-
-| 
-| 
-| 2.3.0
-
-
 |===
