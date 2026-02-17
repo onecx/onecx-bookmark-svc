@@ -34,6 +34,10 @@ public class BookmarkService {
 
         List<Image> createImages = new ArrayList<>();
 
+        if (mode.equals(EximModeDTOV1.OVERWRITE)) {
+            dao.deleteAllByWorkspaceName(workspaceName);
+        }
+
         requestDTO.getBookmarks().values()
                 .forEach(bookmarkList -> bookmarkList.forEach(eximBookmarkDTOV1 -> {
                     var createdBookmark = dao
@@ -45,9 +49,6 @@ public class BookmarkService {
                     }
                 }));
 
-        if (mode.equals(EximModeDTOV1.OVERWRITE)) {
-            dao.deleteAllByWorkspaceName(workspaceName);
-        }
         imageDAO.create(createImages);
     }
 
