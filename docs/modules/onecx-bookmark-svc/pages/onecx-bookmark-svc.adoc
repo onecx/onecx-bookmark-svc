@@ -7,7 +7,7 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a| [[onecx-bookmark-svc_onecx-bookmark-default-enabled]] [.property-path]##link:#onecx-bookmark-svc_onecx-bookmark-default-enabled[`onecx.bookmark.default.enabled`]##
+a| [[onecx-bookmark-svc_onecx-bookmark-default-enabled]] [.property-path]##link:#onecx-bookmark-svc_onecx-bookmark-default-enabled[`+++onecx.bookmark.default.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++onecx.bookmark.default.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -28,7 +28,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[onecx-bookmark-svc_onecx-bookmark-default-url]] [.property-path]##link:#onecx-bookmark-svc_onecx-bookmark-default-url[`onecx.bookmark.default.url`]##
+a| [[onecx-bookmark-svc_onecx-bookmark-default-url]] [.property-path]##link:#onecx-bookmark-svc_onecx-bookmark-default-url[`+++onecx.bookmark.default.url+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++onecx.bookmark.default.url+++[]
 endif::add-copy-button-to-config-props[]
@@ -49,7 +49,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |`+++https://github.com/onecx+++`
 
-a| [[onecx-bookmark-svc_onecx-bookmark-product-item-id]] [.property-path]##link:#onecx-bookmark-svc_onecx-bookmark-product-item-id[`onecx.bookmark.product-item-id`]##
+a| [[onecx-bookmark-svc_onecx-bookmark-product-item-id]] [.property-path]##link:#onecx-bookmark-svc_onecx-bookmark-product-item-id[`+++onecx.bookmark.product-item-id+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++onecx.bookmark.product-item-id+++[]
 endif::add-copy-button-to-config-props[]
