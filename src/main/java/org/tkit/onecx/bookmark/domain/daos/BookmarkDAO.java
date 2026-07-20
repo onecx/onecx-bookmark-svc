@@ -50,6 +50,10 @@ public class BookmarkDAO extends AbstractDAO<Bookmark> {
                         cb.equal(root.get(Bookmark_.userId), ApplicationContext.get().getPrincipal())));
             }
 
+            if (criteria.getDisabled() != null) {
+                predicates.add(cb.equal(root.get(Bookmark_.DISABLED), criteria.getDisabled()));
+            }
+
             cq.where(cb.and(predicates.toArray(new Predicate[0])));
             cq.orderBy(cb.desc(root.get(AbstractTraceableEntity_.CREATION_DATE)));
             return createPageQuery(cq, Page.of(criteria.getPageNumber(), criteria.getPageSize())).getPageResult();

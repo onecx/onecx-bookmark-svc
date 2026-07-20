@@ -19,6 +19,8 @@ public class BookmarkSearchCriteria {
 
     private Scope scope;
 
+    private Boolean disabled;
+
     private Integer pageNumber;
 
     private Integer pageSize;
