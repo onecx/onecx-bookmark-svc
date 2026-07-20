@@ -238,6 +238,19 @@ class BookmarkRestControllerTest extends AbstractTest {
                 .extract().as(BookmarkPageResultDTO.class);
 
         assertThat(1).isEqualTo(data.getStream().size());
+
+        bookmarkSearchCriteriaDTO2.setDisabled(true);
+        data = given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .body(bookmarkSearchCriteriaDTO2)
+                .post("/search")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .extract().as(BookmarkPageResultDTO.class);
+
+        assertThat(0).isEqualTo(data.getStream().size());
     }
 
     @Test
@@ -267,6 +280,19 @@ class BookmarkRestControllerTest extends AbstractTest {
                 .header(APM_HEADER_PARAM, createToken("org3"))
                 .body(bookmarkSearchCriteriaDTO2)
                 .post("/user")
+                .then()
+                .statusCode(OK.getStatusCode())
+                .extract().as(BookmarkPageResultDTO.class);
+
+        assertThat(1).isEqualTo(data.getStream().size());
+
+        bookmarkSearchCriteriaDTO2.setDisabled(true);
+        data = given()
+                .contentType(APPLICATION_JSON)
+                .auth().oauth2(keycloakTestClient.getClientAccessToken("testClient"))
+                .header(APM_HEADER_PARAM, createToken("org3"))
+                .body(bookmarkSearchCriteriaDTO2)
+                .post("/search")
                 .then()
                 .statusCode(OK.getStatusCode())
                 .extract().as(BookmarkPageResultDTO.class);
